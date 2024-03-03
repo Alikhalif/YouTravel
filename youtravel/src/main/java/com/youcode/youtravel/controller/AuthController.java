@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @RestController
-@RequestMapping("/auth")
+@RequestMapping
 public class AuthController {
     private final AuthServiceImpl authService;
 
@@ -20,9 +22,8 @@ public class AuthController {
         this.authService = authService;
     }
 
-
     @PostMapping("/register")
-    public ResponseEntity<AuthResponseDTO> register(@RequestBody RegisterRequestDTO request) {
+    public ResponseEntity<AuthResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request) {
         System.out.println("ok");
         return ResponseEntity.ok(authService.register(request));
     }
