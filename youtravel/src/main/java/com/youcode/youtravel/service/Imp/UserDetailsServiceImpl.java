@@ -1,4 +1,4 @@
-package com.youcode.youtravel.service;
+package com.youcode.youtravel.service.Imp;
 
 import com.youcode.youtravel.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -8,10 +8,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserServiceImpl implements UserDetailsService {
+public class UserDetailsServiceImpl implements UserDetailsService {
 
-    @Autowired
+
     private UserRepository userRepository;
+    @Autowired
+    public UserDetailsServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
+
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         return userRepository.findByEmail(username).orElseThrow();
