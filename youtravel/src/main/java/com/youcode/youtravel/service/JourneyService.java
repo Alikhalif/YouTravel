@@ -14,4 +14,5 @@ public interface JourneyService {
     List<JourneyDTOResp> findAll();
     JourneyDTOResp update(Long id, JourneyDTO journeyDTO);
     Page<JourneyDTOResp> findWithPagination(Pageable pageable);
+
 }

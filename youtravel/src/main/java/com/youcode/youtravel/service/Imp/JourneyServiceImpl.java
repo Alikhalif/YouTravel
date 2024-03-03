@@ -2,9 +2,11 @@ package com.youcode.youtravel.service.Imp;
 
 import com.youcode.youtravel.dto.JourneyDTO;
 import com.youcode.youtravel.dto.ResponseDto.JourneyDTOResp;
+import com.youcode.youtravel.entities.Car;
 import com.youcode.youtravel.entities.Journey;
 import com.youcode.youtravel.entities.User;
 import com.youcode.youtravel.exception.ResourceNotFoundException;
+import com.youcode.youtravel.repositories.CarRepository;
 import com.youcode.youtravel.repositories.JourneyRepository;
 import com.youcode.youtravel.repositories.UserRepository;
 import com.youcode.youtravel.service.JourneyService;
@@ -23,13 +25,15 @@ public class JourneyServiceImpl implements JourneyService {
 
     private final JourneyRepository journeyRepository;
     private final UserRepository userRepository;
+    private final CarRepository carRepository;
     private final ModelMapper modelMapper;
 
     @Autowired
-    public JourneyServiceImpl(JourneyRepository journeyRepository, UserRepository userRepository, ModelMapper modelMapper){
+    public JourneyServiceImpl(JourneyRepository journeyRepository, UserRepository userRepository, CarRepository carRepository, ModelMapper modelMapper){
         this.journeyRepository = journeyRepository;
         this.userRepository = userRepository;
         this.modelMapper = modelMapper;
+        this.carRepository = carRepository;
     }
 
 
@@ -40,6 +44,10 @@ public class JourneyServiceImpl implements JourneyService {
         User user = userRepository.findById(journeyDTO.getUser_id())
                 .orElseThrow(() -> new ResourceNotFoundException("not found User with id : "+journeyDTO.getUser_id()));
         journey.setUser(user);
+
+        Car car = carRepository.findById(journeyDTO.getCar_id())
+                .orElseThrow(() -> new ResourceNotFoundException("not found car with id : "+journeyDTO.getCar_id()));
+        journey.setCar(car);
 
         journey = journeyRepository.save(journey);
         return modelMapper.map(journey, JourneyDTOResp.class);
@@ -70,7 +78,7 @@ public class JourneyServiceImpl implements JourneyService {
     @Override
     public JourneyDTOResp update(Long id, JourneyDTO journeyDTO) {
         Journey journey = journeyRepository.findById(id)
-                .orElseThrow(() -> new ResourceNotFoundException("Fish Not found"));
+                .orElseThrow(() -> new ResourceNotFoundException("Fish Not found !"));
         return modelMapper.map(journeyRepository.save(journey), JourneyDTOResp.class);
     }
 
