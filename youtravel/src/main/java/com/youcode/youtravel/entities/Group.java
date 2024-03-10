@@ -57,5 +57,8 @@ public class Group {
 
     @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Join> joinList;
+
+    @OneToMany(mappedBy = "group", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<PlacesGroup> PlaceGroupList;
 }
 

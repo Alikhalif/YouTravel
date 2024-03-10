@@ -73,4 +73,7 @@ public class Journey {
     @OneToMany(mappedBy = "journey", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
     private List<Reservation> reservationList;
 
+    @OneToMany(mappedBy = "journey", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    private List<PlacesJourney> PlaceJourneyList;
+
 }
