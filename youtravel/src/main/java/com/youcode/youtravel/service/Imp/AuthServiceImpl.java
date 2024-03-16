@@ -1,5 +1,6 @@
 package com.youcode.youtravel.service.Imp;
 
+import com.youcode.youtravel.dto.AuthDTO.AuthRequestDTO;
 import com.youcode.youtravel.dto.AuthDTO.AuthResponseDTO;
 import com.youcode.youtravel.dto.AuthDTO.RegisterRequestDTO;
 import com.youcode.youtravel.entities.Token;
@@ -12,6 +13,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -82,6 +84,27 @@ public class AuthServiceImpl {
 
     }
 
+    public AuthResponseDTO login(AuthRequestDTO request){
+        authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        request.getEmail(),
+                        request.getPassword()
+                )
+        );
+
+        User user = userRepository.findByUsername(request.getEmail()).orElseThrow();
+        String jwt = jwtService.generateToken(user);
+
+
+
+
+        revokeAllTokenByUser(user);
+        saveUserToken(jwt, user);
+
+        return AuthResponseDTO.builder()
+                .token(jwt).build();
+
+    }
 
     private void revokeAllTokenByUser(User user) {
         List<Token> validTokens = tokenRepository.findAllTokensByUser(user.getUid());

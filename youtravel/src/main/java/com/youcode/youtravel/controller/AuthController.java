@@ -1,5 +1,6 @@
 package com.youcode.youtravel.controller;
 
+import com.youcode.youtravel.dto.AuthDTO.AuthRequestDTO;
 import com.youcode.youtravel.dto.AuthDTO.AuthResponseDTO;
 import com.youcode.youtravel.dto.AuthDTO.RegisterRequestDTO;
 import com.youcode.youtravel.service.Imp.AuthServiceImpl;
@@ -26,6 +27,12 @@ public class AuthController {
     public ResponseEntity<AuthResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request) {
         System.out.println("ok");
         return ResponseEntity.ok(authService.register(request));
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody AuthRequestDTO request) {
+        System.out.println("login ok !!!");
+        return ResponseEntity.ok(authService.login(request));
     }
 
 }
