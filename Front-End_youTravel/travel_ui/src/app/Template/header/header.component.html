@@ -1,0 +1,31 @@
+<header class="">
+  <div class="bg-white shadow-md z-50">
+      <nav class="flex justify-between items-center w-[92%]  mx-auto">
+          <div>
+              <img class="w-16 cursor-pointer"  alt="...">logo
+          </div>
+          <div [ngClass]="{'hidden': !showMenu, 'flex fixed ': showMenu}" class=" lg:flex lg:flex-grow  items-center">
+            <ul class="flex flex-col lg:flex-row list-none   mx-auto gap-6 ">
+              <li>
+                <a routerLink="/" class="hover:text-gray-500 cursor-pointer" >Home</a>
+              </li>
+              <li>
+                <a routerLink="/journey"  class="hover:text-gray-500" >Journey</a>
+              </li>
+              <li>
+                <a  class="hover:text-gray-500" href="#">Group</a>
+              </li>
+
+            </ul>
+          </div>
+          <div class="flex items-center gap-6">
+              <a routerLink="/auth/login" class="bg-[#a6c1ee] text-white px-5 py-2 rounded-full hover:bg-[#87acec]">Sign in</a>
+              <button (click)="toggleNavbar()"  name="menu" class="text-3xl cursor-pointer md:hidden">ok</button>
+          </div>
+          </nav>
+        </div>
+
+
+
+
+</header>

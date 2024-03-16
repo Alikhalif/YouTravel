@@ -1,0 +1,34 @@
+<h1>Integrate Google Maps in Angular - Tutsmake.com</h1>
+
+<google-map height="450px"
+            width="1000px"
+            [center]="center"
+            [zoom]="zoom"
+            (mapClick)="moveMap($event)"
+            (mapMousemove)="move($event)">
+</google-map>
+
+<div>Latitude: {{display?.lat}}</div>
+<div>Longitude: {{display?.lng}}</div>
+
+
+<div>
+  <h3>Select Country State and City</h3>
+
+
+<div class="select_option">
+    <select class="form-select country" aria-label="Default select example" (change)="loadStates()" [(ngModel)]="selectedCountry">
+        <option disabled [value]="null">Select Country</option>
+        <option *ngFor="let country of countries" [value]="country.iso2">{{ country.name }}</option>
+    </select>
+    <select class="form-select state" aria-label="Default select example" (change)="loadCities()" [(ngModel)]="selectedState">
+        <option disabled [value]="null">Select State</option>
+        <option *ngFor="let state of states" [value]="state.iso2">{{ state.name }}</option>
+    </select>
+    <select class="form-select city" aria-label="Default select example" [(ngModel)]="selectedCity">
+        <option disabled [value]="null">Select City</option>
+        <option *ngFor="let city of cities" [value]="city.name">{{ city.name }}</option>
+    </select>
+</div>
+
+</div>
