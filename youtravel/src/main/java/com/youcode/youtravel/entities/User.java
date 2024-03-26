@@ -71,15 +71,7 @@ public class User implements UserDetails {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
-    @Override
-    public String getPassword() {
-        return null;
-    }
 
-    @Override
-    public String getUsername() {
-        return null;
-    }
 
     @Override
     public boolean isAccountNonExpired() {

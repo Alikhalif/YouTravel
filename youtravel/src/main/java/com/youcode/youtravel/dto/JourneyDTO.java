@@ -12,11 +12,17 @@ public class JourneyDTO {
     @NotBlank(message = "Starting country Should not be Empty")
     private String countryStarting;
 
+    @NotBlank(message = "Starting state Should not be Empty")
+    private String stateStarting;
+
     @NotBlank(message = "Starting city Should not be Empty")
     private String cityStarting;
 
     @NotBlank(message = "Arrival country Should not be Empty")
     private String countryArrival;
+
+    @NotBlank(message = "Arrival state Should not be Empty")
+    private String stateArrival;
 
     @NotBlank(message = "Arrival city Should not be Empty")
     private String cityArrival;

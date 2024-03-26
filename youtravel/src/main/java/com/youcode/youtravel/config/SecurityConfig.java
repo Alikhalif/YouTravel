@@ -22,7 +22,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
-@EnableGlobalMethodSecurity(prePostEnabled = true)
+//@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
     private final UserDetailsServiceImpl userDetailsServiceImp;
 
@@ -40,13 +40,14 @@ public class SecurityConfig {
     }
 
 
+    /*
     private static final String[] WHITE_LIST_URL = {
             "/register",
             "/login/**",
     };
 
-        @Bean
-        public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
             return http
                     .csrf(AbstractHttpConfigurer::disable)
@@ -71,12 +72,13 @@ public class SecurityConfig {
                             ))
                     .build();
 
-        }
+        }*/
 
-    /*
+
     private static final String[] WHITE_LIST_URL = {
             "/register",
             "/login/**",
+            "/api/**"
     };
 
     @Bean
@@ -94,7 +96,7 @@ public class SecurityConfig {
         return http.build();
     }
 
-     */
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

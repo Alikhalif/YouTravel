@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,13 +17,14 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path = "api/journey", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/journey")
 public class JourneyController {
     @Autowired
     private JourneyService journeyService;
 
     @PostMapping
-    public ResponseEntity<JourneyDTOResp> createFish(@Valid @RequestBody JourneyDTO journeyDTO) {
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
+    public ResponseEntity<JourneyDTOResp> createJourney(@Valid @RequestBody JourneyDTO journeyDTO) {
         JourneyDTOResp journeyDTOResp = journeyService.create(journeyDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(journeyDTOResp);
     }
@@ -42,7 +44,7 @@ public class JourneyController {
     }
 
     @GetMapping
-    public ResponseEntity<List<JourneyDTOResp>> getFishes() {
+    public ResponseEntity<List<JourneyDTOResp>> getJourneys() {
         List<JourneyDTOResp> journeys = journeyService.findAll();
         return ResponseEntity.ok(journeys);
     }

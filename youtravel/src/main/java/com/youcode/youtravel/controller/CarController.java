@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -16,18 +17,20 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path = "api/car", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/car")
 public class CarController {
     @Autowired
     private CarService carService;
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<CarDTOResp> createCar(@Valid @RequestBody CarDTO carDTO) {
         CarDTOResp carDTOResp = carService.create(carDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(carDTOResp);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<Map<String, String>> deleteCar(@PathVariable Long id) {
         carService.delete(id);
         Map<String, String> response = new HashMap<>();
@@ -36,24 +39,28 @@ public class CarController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<CarDTOResp> findCarByID(@PathVariable Long id) {
         CarDTOResp car = carService.getOne(id);
         return ResponseEntity.ok(car);
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<List<CarDTOResp>> getCars() {
         List<CarDTOResp> cars = carService.findAll();
         return ResponseEntity.ok(cars);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<CarDTOResp> updateFish(@PathVariable Long id, @Valid @RequestBody CarDTO carDTO) {
         CarDTOResp updatedCar = carService.update(id, carDTO);
         return ResponseEntity.ok(updatedCar);
     }
 
     @GetMapping("/paginated")
+    @PreAuthorize("hasAnyAuthority('ADMIN')")
     public ResponseEntity<List<CarDTOResp>> getPaginatedLevel(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size

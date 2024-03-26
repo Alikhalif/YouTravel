@@ -3,11 +3,16 @@ package com.youcode.youtravel.dto;
 import com.youcode.youtravel.enums.Role;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 
 @Data
+@AllArgsConstructor
+@NoArgsConstructor
 public class UserDTO {
     @NotBlank(message = "First Name Should not be Empty")
     private String firstname;

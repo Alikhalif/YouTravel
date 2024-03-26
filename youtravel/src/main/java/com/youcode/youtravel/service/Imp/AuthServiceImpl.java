@@ -3,6 +3,7 @@ package com.youcode.youtravel.service.Imp;
 import com.youcode.youtravel.dto.AuthDTO.AuthRequestDTO;
 import com.youcode.youtravel.dto.AuthDTO.AuthResponseDTO;
 import com.youcode.youtravel.dto.AuthDTO.RegisterRequestDTO;
+import com.youcode.youtravel.dto.ResponseDto.UserDTOResp;
 import com.youcode.youtravel.entities.Token;
 import com.youcode.youtravel.entities.User;
 import com.youcode.youtravel.enums.Role;
@@ -30,6 +31,7 @@ public class AuthServiceImpl {
     private final TokenRepository tokenRepository;
 
     private final AuthenticationManager authenticationManager;
+    private final ModelMapper modelMapper;
 
 
     @Autowired
@@ -37,12 +39,14 @@ public class AuthServiceImpl {
                                  PasswordEncoder passwordEncoder,
                                  JwtService jwtService,
                                  TokenRepository tokenRepository,
-                                 AuthenticationManager authenticationManager) {
+                                 AuthenticationManager authenticationManager,
+                                 ModelMapper modelMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
         this.jwtService = jwtService;
         this.tokenRepository = tokenRepository;
         this.authenticationManager = authenticationManager;
+        this.modelMapper = modelMapper;
     }
 
 
@@ -76,6 +80,7 @@ public class AuthServiceImpl {
 
             return AuthResponseDTO.builder()
                     .token(jwt)
+                    .userDTOResp(modelMapper.map(user, UserDTOResp.class))
                     .build();
 
         } catch (DataIntegrityViolationException e) {
@@ -85,24 +90,25 @@ public class AuthServiceImpl {
     }
 
     public AuthResponseDTO login(AuthRequestDTO request){
+
+
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getEmail(),
+                        request.getUsername(),
                         request.getPassword()
                 )
         );
 
-        User user = userRepository.findByUsername(request.getEmail()).orElseThrow();
+        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+
         String jwt = jwtService.generateToken(user);
-
-
-
 
         revokeAllTokenByUser(user);
         saveUserToken(jwt, user);
 
         return AuthResponseDTO.builder()
-                .token(jwt).build();
+                .token(jwt)
+                .userDTOResp(modelMapper.map(user, UserDTOResp.class)).build();
 
     }
 

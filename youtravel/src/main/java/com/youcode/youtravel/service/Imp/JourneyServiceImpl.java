@@ -1,7 +1,9 @@
 package com.youcode.youtravel.service.Imp;
 
 import com.youcode.youtravel.dto.JourneyDTO;
+import com.youcode.youtravel.dto.ResponseDto.CarDTOResp;
 import com.youcode.youtravel.dto.ResponseDto.JourneyDTOResp;
+import com.youcode.youtravel.dto.ResponseDto.UserDTOResp;
 import com.youcode.youtravel.entities.Car;
 import com.youcode.youtravel.entities.Journey;
 import com.youcode.youtravel.entities.User;
@@ -72,7 +74,14 @@ public class JourneyServiceImpl implements JourneyService {
 
     @Override
     public List<JourneyDTOResp> findAll() {
-        return journeyRepository.findAll().stream().map(journey -> modelMapper.map(journey, JourneyDTOResp.class)).collect(Collectors.toList());
+        return journeyRepository.findAll().stream()
+                .map(journey -> {
+                    JourneyDTOResp journeyDTO = modelMapper.map(journey, JourneyDTOResp.class);
+                    journeyDTO.setCarDTOResp(modelMapper.map(carRepository.findById(journey.getCar().getId()), CarDTOResp.class));
+                    journeyDTO.setUserDTOResp(modelMapper.map(userRepository.findById(journey.getUser().getUid()), UserDTOResp.class));
+                    return journeyDTO;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override
