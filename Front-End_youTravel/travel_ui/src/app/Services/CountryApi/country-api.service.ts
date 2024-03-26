@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class CountryApiService {
 
   private apiUrl = 'https://api.countrystatecity.in/v1';
-  private apiKey = 'NHhvOEcyWk50N2Vna3VFTE00bFp3MjFKR0ZEOUhkZlg4RTk1MlJlaA==';
+  private apiKey = 'cFZhZG15cWxZOU9Kb0Y0WHJoVnoyZDJ2b2dJN2RtYVFkZlQ4ZGxlcQ==';
 
   constructor(private http: HttpClient) { }
 

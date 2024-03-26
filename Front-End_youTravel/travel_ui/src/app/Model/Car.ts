@@ -1,5 +1,6 @@
 export interface Car{
-  name : number,
+  id: number,
+  name : String,
 
   color : String,
 

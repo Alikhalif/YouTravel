@@ -32,11 +32,11 @@ export class RegisterComponent {
 
   submitForm(){
     this.userService.register(this.myUser).subscribe({
-      next: (res: any) => {
+      next: (authenticationResponse) => {
         alert("created successfuly");
-        localStorage.setItem('token', res.token)
+        localStorage.setItem('user', JSON.stringify(authenticationResponse))
         this.router.navigateByUrl('/')
-        console.log(res.token, 'response');
+        console.log(authenticationResponse.token, 'response');
 
       },
       error: (err: any) => {

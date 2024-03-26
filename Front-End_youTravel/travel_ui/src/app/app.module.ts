@@ -13,6 +13,15 @@ import { HttpClientModule } from '@angular/common/http';
 import { ListJourneyComponent } from './Pages/Journey/list-journey/list-journey.component';
 import { CreateJourneyComponent } from './Pages/Journey/create-journey/create-journey.component';
 import { GoogleMapsModule } from '@angular/google-maps';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button';
+import { MatInputModule } from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import {MatStepperModule} from '@angular/material/stepper';
+import { ReactiveFormsModule } from '@angular/forms';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CommonModule } from '@angular/common';
+// import { StoreModule } from '@ngrx/store';
 
 @NgModule({
   declarations: [
@@ -23,7 +32,7 @@ import { GoogleMapsModule } from '@angular/google-maps';
     LoginComponent,
     RegisterComponent,
     ListJourneyComponent,
-    CreateJourneyComponent
+    CreateJourneyComponent,
   ],
   imports: [
     BrowserModule,
@@ -31,6 +40,16 @@ import { GoogleMapsModule } from '@angular/google-maps';
     FormsModule,
     HttpClientModule,
     GoogleMapsModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatInputModule,
+    MatIconModule,
+    MatStepperModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    CommonModule,
+    // StoreModule.forRoot({}, {}),
+
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -31,35 +31,21 @@ export class LoginComponent {
   // }
 
   loginForm(){
-    // this.userService.login(this.myAuth).subscribe({
-    //   next: (res: any) => {
+    this.userService.login(this.myAuth).subscribe({
+      next: (res) => {
 
+        localStorage.setItem('user', JSON.stringify(res))
 
-    //     // this.authService.setId(res.user_id);
-    //     // this.authService.setRole(res.role);
-    //     // this.authService.setToken(res.token);
+        this.router.navigateByUrl('/')
 
-    //     // this.roles =this.authService.generateRoleTok();
-    //     // this.username = this.authService.generateUsernameTok();
+      },
+      error: (err: any) => {
+        this.error = err.error;
+        console.log(err.error.errors, 'errors');
+      },
+    });
 
-    //     // alert(this.username)
-
-
-    // //return roles.includes('ROLE_MANAGER');
-
-    //     //localStorage.setItem('token', res.token)
-
-    //     this.router.navigateByUrl('/')
-    //     console.log(res.token, 'response');
-
-    //   },
-    //   error: (err: any) => {
-    //     this.error = err.error;
-    //     console.log(err.error.errors, 'errors');
-    //   },
-    // });
-
-    // this.clear()
+    this.clear()
   }
 
 

@@ -1,9 +1,14 @@
 export interface Journey{
-  countryStarting : String
+  id: number,
+  countryStarting : String,
+
+  stateStarting: String,
 
   cityStarting : String,
 
   countryArrival : String,
+
+  stateArrival: String,
 
   cityArrival : String,
 
