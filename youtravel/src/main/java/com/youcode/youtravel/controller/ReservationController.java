@@ -19,7 +19,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path = "api/reservation", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/reservation")
 public class ReservationController {
     @Autowired
     private ReservationService reservationService;

@@ -3,12 +3,13 @@ package com.youcode.youtravel.dto;
 import lombok.Data;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 
 @Data
 public class ReservationDTO {
     @NotNull(message = "Place Reserved should not be null")
-    @Min(value = 1, message = "Place Reserved should be at least 1")
-    private Integer placeReserved;
+    @Positive(message = "Number Place should be a positive value")
+    private Integer reservedPlaces;
 
     private Double cost;
 
