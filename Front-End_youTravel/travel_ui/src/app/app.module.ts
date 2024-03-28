@@ -21,6 +21,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
+import { CreateReservationComponent } from './Pages/Reserveation/create-reservation/create-reservation.component';
 // import { StoreModule } from '@ngrx/store';
 
 @NgModule({
@@ -33,6 +34,7 @@ import { CommonModule } from '@angular/common';
     RegisterComponent,
     ListJourneyComponent,
     CreateJourneyComponent,
+    CreateReservationComponent,
   ],
   imports: [
     BrowserModule,

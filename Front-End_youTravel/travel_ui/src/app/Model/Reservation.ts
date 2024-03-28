@@ -1,5 +1,6 @@
 export interface Reservation{
-  placeReserved : number,
+
+  reservedPlaces : number,
 
   cost : number,
 
