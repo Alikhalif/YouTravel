@@ -49,26 +49,38 @@ public class ReservationServiceImpl implements ReservationService {
                     .orElseThrow(() -> new ResourceNotFoundException("not found journey with id : " + reservationDTO.getJourney_id()));
             reservation.setJourney(journey);
 
+            if(reservationDTO.getReservedPlaces() <= journey.getNbrPlaces()){
+                var nbr = journey.getNbrPlaces() - reservationDTO.getReservedPlaces();
+                journey.setNbrPlaces(nbr);
+                journeyRepository.save(journey);
 
-            User user = userRepository.findById(reservationDTO.getUser_id())
-                    .orElseThrow(() -> new ResourceNotFoundException("not found member with id : " + reservationDTO.getUser_id()));
-            reservation.setUser(user);
+                User user = userRepository.findById(reservationDTO.getUser_id())
+                        .orElseThrow(() -> new ResourceNotFoundException("not found member with id : " + reservationDTO.getUser_id()));
+                reservation.setUser(user);
 
 
-            ReservationID reservationID = new ReservationID(
-                    reservationDTO.getUser_id(),
-                    reservationDTO.getJourney_id()
-            );
+                ReservationID reservationID = new ReservationID(
+                        reservationDTO.getUser_id(),
+                        reservationDTO.getJourney_id()
+                );
 
-            if (reservationRepository.existsById(reservationID)) {
-                throw new ResourceNotFoundException("Reservation already to the member");
-            } else {
-                reservation.setReservationID(reservationID);
+                if (reservationRepository.existsById(reservationID)) {
+                    throw new ResourceNotFoundException("Reservation already to the member");
+                } else {
+                    reservation.setReservationID(reservationID);
+                }
+
+
+                reservation = reservationRepository.save(reservation);
+                return modelMapper.map(reservation, ReservationDTOResp.class);
+            }
+            else {
+                throw new ResourceNotFoundException("All seats are full");
+
             }
 
 
-            reservation = reservationRepository.save(reservation);
-            return modelMapper.map(reservation, ReservationDTOResp.class);
+
     }
 
 
