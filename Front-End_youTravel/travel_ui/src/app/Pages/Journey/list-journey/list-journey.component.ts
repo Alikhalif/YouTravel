@@ -41,7 +41,7 @@ export class ListJourneyComponent implements OnInit{
         this.ListJourney = value
         console.log(this.ListJourney);
 
-        },
+      },
       error : (error) => {
         alert("Error while retrieving data!");
         console.log('Error' + error);
@@ -64,12 +64,14 @@ export class ListJourneyComponent implements OnInit{
 
             console.log(res, ' car response');
 
+
           },
           error: (err: any) => {
             // this.error = err.error;
             // console.log(err.error.errors, 'errors');
           },
         });
+        this.loadJourney();
       }
 
 
@@ -78,12 +80,20 @@ export class ListJourneyComponent implements OnInit{
       window.location.href='/login';
     }
 
+
+    this.closePopup();
+
   }
 
-  togglePopup(id:number) {
-    this.showPopup = !this.showPopup;
-    console.log(id);
-    this.id_journey = id;
+  togglePopup(id:number, nbrP: number) {
+    if(nbrP > 0){
+      this.showPopup = !this.showPopup;
+      console.log(id);
+      this.id_journey = id;
+    }else{
+      alert("All seats are full")
+    }
+
 
 
   }

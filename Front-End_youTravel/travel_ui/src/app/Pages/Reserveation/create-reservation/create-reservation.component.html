@@ -1,20 +1,108 @@
-<div class="fixed z-10 inset-0 overflow-y-auto hidden" [class.hidden]="!showPopup">
-  <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-    <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
-      <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
-        <div class="sm:flex sm:items-start">
-          <!-- Popup content -->
-          <div class="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left">
-            <h3 class="text-lg leading-6 font-medium text-gray-900">Popup Title</h3>
-            <div class="mt-2">
-              <p class="text-sm text-gray-500">Popup content goes here...</p>
-            </div>
-          </div>
-        </div>
+<h1>reserv</h1>
+<div>
+
+  <div class="mx-3 border shadow-md rounded-lg p-5 m-5">
+    <div class="flex justify-around mb-3">
+      <h3 class="text-xl font-bold w-10">From</h3>
+
+      <div class="flex flex-col">
+        <label for="country" class="block mb-2 text-sm font-medium text-gray-900">Country</label>
+        <select id="country" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-56 p-2.5" aria-label="Select Country" (change)="loadStates(0)" [(ngModel)]="api_country[0]" >
+            <option disabled value="">Select Country</option>
+            <option *ngFor="let country of countries" [ngValue]="country">{{ country.name }}</option>
+        </select>
       </div>
-      <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-        <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-red-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500 sm:ml-3 sm:w-auto sm:text-sm" (click)="closePopup()">Close</button>
+
+      <div class="flex flex-col">
+          <label for="state" class="block mb-2 text-sm font-medium text-gray-900">State</label>
+          <select id="state" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-56 p-2.5 " aria-label="Select State" (change)="loadCities(1)" [(ngModel)]="api_country[1]">
+              <option disabled value="">Select State</option>
+              <option *ngFor="let state of states" [ngValue]="state">{{ state.name }}</option>
+          </select>
+      </div>
+
+      <div class="flex flex-col">
+          <label for="city" class="block mb-2 text-sm font-medium text-gray-900">City</label>
+          <select id="city" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-56 p-2.5 " aria-label="Select City" (change)="load(2)" [(ngModel)]="api_country[2]">
+              <option disabled value="">Select City</option>
+              <option *ngFor="let city of cities" [ngValue]="city">{{ city.name }}</option>
+          </select>
+      </div>
+
+      <!-- <div class="flex flex-col">
+        <label for="city" class="block mb-2 text-sm font-medium text-gray-900">from </label>
+          <input
+            type="text"
+            id="inputField"
+            [placeholder]="placeholder"
+            #inputField
+            class="block w-48 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
+            [(ngModel)]="my_journey.fromPlace"
+            />
+      </div> -->
+
+      <div class="flex flex-col">
+        <label for="city" class="block mb-2 text-sm font-medium text-gray-900">Start date </label>
+        <input type="datetime-local" class="block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
       </div>
     </div>
+
+
+
+
+    <div class="flex justify-around ">
+      <h3 class="text-xl font-bold w-10">To</h3>
+
+      <div class="flex flex-col">
+        <label for="country" class="block mb-2 text-sm font-medium text-gray-900">Country</label>
+        <select id="country" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-56 p-2.5" aria-label="Select Country" (change)="loadStates(3)" [(ngModel)]="api_country[3]" >
+            <option disabled value="">Select Country</option>
+            <option *ngFor="let country of countries" [ngValue]="country">{{ country.name }}</option>
+        </select>
+      </div>
+
+      <div class="flex flex-col">
+          <label for="state" class="block mb-2 text-sm font-medium text-gray-900">State</label>
+          <select id="state" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-56 p-2.5 " aria-label="Select State" (change)="loadCities(4)" [(ngModel)]="api_country[4]">
+              <option disabled value="">Select State</option>
+              <option *ngFor="let state of states" [ngValue]="state">{{ state.name }}</option>
+          </select>
+      </div>
+
+      <div class="flex flex-col">
+          <label for="city" class="block mb-2 text-sm font-medium text-gray-900">City</label>
+          <select id="city" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-56 p-2.5 " aria-label="Select City" (change)="load(5)" [(ngModel)]="api_country[5]">
+              <option disabled value="">Select City</option>
+              <option *ngFor="let city of cities" [ngValue]="city">{{ city.name }}</option>
+          </select>
+      </div>
+
+      <!-- <div class="flex flex-col">
+        <label for="city" class="block mb-2 text-sm font-medium text-gray-900">from </label>
+        <input type="text" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-48 p-2.5 " aria-label="Select City" [(ngModel)]="my_journey.toPlace">
+      </div> -->
+
+      <div class="flex flex-col">
+        <label for="city" class="block mb-2 text-sm font-medium text-gray-900">End date </label>
+        <input type="datetime-local" class="block w-48 px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+      </div>
+
+    </div>
+
+    <!-- btn search -->
+    <div class=" pt-6 sm:px-16 sm:flex sm:flex-row-reverse">
+      <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-green-600 text-base font-medium text-white hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" >Search</button>
+      <button type="button" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-gray-400 text-base font-medium text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-offset-2 sm:ml-3 sm:w-auto sm:text-sm" >Clear</button>
+    </div>
   </div>
+
+
+  <div>
+    result
+  </div>
+
+
+
+
+
 </div>

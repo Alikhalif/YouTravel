@@ -5,6 +5,7 @@ import { LoginComponent } from './Pages/Auth/login/login.component';
 import { RegisterComponent } from './Pages/Auth/register/register.component';
 import { ListJourneyComponent } from './Pages/Journey/list-journey/list-journey.component';
 import { CreateJourneyComponent } from './Pages/Journey/create-journey/create-journey.component';
+import { CreateReservationComponent } from './Pages/Reserveation/create-reservation/create-reservation.component';
 
 const routes: Routes = [
   { path:'', component:HomeComponent, },
@@ -29,6 +30,12 @@ const routes: Routes = [
     component: CreateJourneyComponent,
     // title: 'Register',
   },
+  {
+    path: 'journey/reserve',
+    component: CreateReservationComponent,
+    // title: 'Register',
+  },
+
 ];
 
 @NgModule({
