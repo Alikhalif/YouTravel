@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.springframework.data.annotation.CreatedDate;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -22,6 +23,7 @@ public class Join {
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(updatable = false)
+    @CreatedDate
     private LocalDateTime time;
 
     @ManyToOne

@@ -1,7 +1,10 @@
 package com.youcode.youtravel.service.Imp;
 
 import com.youcode.youtravel.dto.GroupDTO;
+import com.youcode.youtravel.dto.ResponseDto.CarDTOResp;
 import com.youcode.youtravel.dto.ResponseDto.GroupDTOResp;
+import com.youcode.youtravel.dto.ResponseDto.JourneyDTOResp;
+import com.youcode.youtravel.dto.ResponseDto.UserDTOResp;
 import com.youcode.youtravel.entities.Group;
 import com.youcode.youtravel.entities.User;
 import com.youcode.youtravel.exception.ResourceNotFoundException;
@@ -59,7 +62,12 @@ public class GroupServiceImpl implements GroupService {
 
     @Override
     public List<GroupDTOResp> findAll() {
-        return groupRepsitory.findAll().stream().map(fish -> modelMapper.map(fish, GroupDTOResp.class)).collect(Collectors.toList());
+        return groupRepsitory.findAll().stream().map(group -> {
+                    GroupDTOResp groupDTOResp = modelMapper.map(group, GroupDTOResp.class);
+                    groupDTOResp.setUserDTOResp(modelMapper.map(userRepository.findById(group.getUser().getUid()), UserDTOResp.class));
+                    return groupDTOResp;
+                })
+                .collect(Collectors.toList());
     }
 
     @Override

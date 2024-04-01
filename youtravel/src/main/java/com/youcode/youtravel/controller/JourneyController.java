@@ -1,6 +1,7 @@
 package com.youcode.youtravel.controller;
 
 import com.youcode.youtravel.dto.JourneyDTO;
+import com.youcode.youtravel.dto.JourneySearchDTO;
 import com.youcode.youtravel.dto.ResponseDto.JourneyDTOResp;
 import com.youcode.youtravel.service.JourneyService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +31,7 @@ public class JourneyController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, String>> deleteFish(@PathVariable Long id) {
+    public ResponseEntity<Map<String, String>> deleteJourney(@PathVariable Long id) {
         journeyService.delete(id);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Journey deleted successfully.");
@@ -38,9 +39,15 @@ public class JourneyController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<JourneyDTOResp> findFishByID(@PathVariable Long id) {
+    public ResponseEntity<JourneyDTOResp> findJourneyByID(@PathVariable Long id) {
         JourneyDTOResp journey = journeyService.getOne(id);
         return ResponseEntity.ok(journey);
+    }
+
+    @PostMapping("/search") // Removed trailing slash from the endpoint
+    public ResponseEntity<List<JourneyDTOResp>> searchJourney(@Valid @RequestBody JourneySearchDTO searchDTO) {
+        List<JourneyDTOResp> journeys = journeyService.findJourneysByCriteria(searchDTO);
+        return ResponseEntity.ok(journeys);
     }
 
     @GetMapping
@@ -50,13 +57,13 @@ public class JourneyController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<JourneyDTOResp> updateFish(@PathVariable Long id, @Valid @RequestBody JourneyDTO journeyDTO) {
+    public ResponseEntity<JourneyDTOResp> updateJourney(@PathVariable Long id, @Valid @RequestBody JourneyDTO journeyDTO) {
         JourneyDTOResp updatedJourny = journeyService.update(id, journeyDTO);
         return ResponseEntity.ok(updatedJourny);
     }
 
     @GetMapping("/paginated")
-    public ResponseEntity<List<JourneyDTOResp>> getPaginatedLevel(
+    public ResponseEntity<List<JourneyDTOResp>> getPaginated(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {

@@ -1,6 +1,7 @@
 package com.youcode.youtravel.service.Imp;
 
 import com.youcode.youtravel.dto.JourneyDTO;
+import com.youcode.youtravel.dto.JourneySearchDTO;
 import com.youcode.youtravel.dto.ResponseDto.CarDTOResp;
 import com.youcode.youtravel.dto.ResponseDto.JourneyDTOResp;
 import com.youcode.youtravel.dto.ResponseDto.UserDTOResp;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -85,6 +87,20 @@ public class JourneyServiceImpl implements JourneyService {
     }
 
     @Override
+    public List<JourneyDTOResp> findJourneysByCriteria(JourneySearchDTO searchDTO) {
+
+        return journeyRepository.findJourneysByCriteria(searchDTO).stream()
+                .map(journey -> {
+                    JourneyDTOResp journeyDTO = modelMapper.map(journey, JourneyDTOResp.class);
+                    journeyDTO.setCarDTOResp(modelMapper.map(carRepository.findById(journey.getCar().getId()), CarDTOResp.class));
+                    journeyDTO.setUserDTOResp(modelMapper.map(userRepository.findById(journey.getUser().getUid()), UserDTOResp.class));
+                    return journeyDTO;
+
+                })
+                .collect(Collectors.toList());
+    }
+
+    @Override
     public JourneyDTOResp update(Long id, JourneyDTO journeyDTO) {
         Journey journey = journeyRepository.findById(id)
                 .orElseThrow(() -> new ResourceNotFoundException("Fish Not found !"));
@@ -93,7 +109,7 @@ public class JourneyServiceImpl implements JourneyService {
 
     @Override
     public Page<JourneyDTOResp> findWithPagination(Pageable pageable) {
-        Page<Journey> fishPage = journeyRepository.findAll(pageable);
-        return fishPage.map(journey -> modelMapper.map(journey, JourneyDTOResp.class));
+        Page<Journey> journeyPage = journeyRepository.findAll(pageable);
+        return journeyPage.map(journey -> modelMapper.map(journey, JourneyDTOResp.class));
     }
 }

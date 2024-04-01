@@ -11,8 +11,6 @@ public class ReservationDTO {
     @Positive(message = "Number Place should be a positive value")
     private Integer reservedPlaces;
 
-    private Double cost;
-
     @NotNull(message = "user id should not be null")
     private Long user_id;
 

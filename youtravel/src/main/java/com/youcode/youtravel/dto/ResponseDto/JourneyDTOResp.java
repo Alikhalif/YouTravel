@@ -36,8 +36,6 @@ public class JourneyDTOResp {
 
     private LocalDateTime endDate;
 
-    private Double costTotal;
-
     private Integer nbrPlaces;
 
     private CarDTOResp carDTOResp;

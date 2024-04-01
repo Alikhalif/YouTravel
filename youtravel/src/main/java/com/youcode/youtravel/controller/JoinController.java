@@ -16,7 +16,7 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path = "api/join", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/join")
 public class JoinController {
     @Autowired
     private JoinService joinService;

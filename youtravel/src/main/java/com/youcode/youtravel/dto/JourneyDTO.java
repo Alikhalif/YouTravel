@@ -39,10 +39,6 @@ public class JourneyDTO {
     @NotBlank(message = "End Date Should not be Empty")
     private LocalDateTime endDate;
 
-    @Positive(message = "Total Cost should be a positive value")
-    @NotNull(message = "Amount Should Not Be Null")
-    private Double costTotal;
-
     @Positive(message = "Number Place should be a positive value")
     @NotNull(message = "Number Place Should Not Be Null")
     private Integer nbrPlaces;

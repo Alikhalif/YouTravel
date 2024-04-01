@@ -16,19 +16,19 @@ import java.util.List;
 import java.util.Map;
 
 @RestController
-@RequestMapping(path = "api/group", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(path = "/api/group")
 public class GroupController {
 
     @Autowired
     private GroupService groupService;
     @PostMapping
-    public ResponseEntity<GroupDTOResp> createFish(@Valid @RequestBody GroupDTO groupDTO) {
+    public ResponseEntity<GroupDTOResp> createGroup(@Valid @RequestBody GroupDTO groupDTO) {
         GroupDTOResp groupDTOResp = groupService.create(groupDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(groupDTOResp);
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Map<String, String>> deleteFish(@PathVariable Long id) {
+    public ResponseEntity<Map<String, String>> deleteGroup(@PathVariable Long id) {
         groupService.delete(id);
         Map<String, String> response = new HashMap<>();
         response.put("message", "Group deleted successfully.");
@@ -36,19 +36,19 @@ public class GroupController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<GroupDTOResp> findFishByID(@PathVariable Long id) {
+    public ResponseEntity<GroupDTOResp> findGroupByID(@PathVariable Long id) {
         GroupDTOResp group = groupService.getOne(id);
         return ResponseEntity.ok(group);
     }
 
     @GetMapping
-    public ResponseEntity<List<GroupDTOResp>> getFishes() {
+    public ResponseEntity<List<GroupDTOResp>> getGroups() {
         List<GroupDTOResp> groups = groupService.findAll();
         return ResponseEntity.ok(groups);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<GroupDTOResp> updateFish(@PathVariable Long id, @Valid @RequestBody GroupDTO groupDTO) {
+    public ResponseEntity<GroupDTOResp> updateGroup(@PathVariable Long id, @Valid @RequestBody GroupDTO groupDTO) {
         GroupDTOResp updatedGroup = groupService.update(id, groupDTO);
         return ResponseEntity.ok(updatedGroup);
     }

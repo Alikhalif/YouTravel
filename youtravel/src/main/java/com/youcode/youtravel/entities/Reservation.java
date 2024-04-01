@@ -24,10 +24,6 @@ public class Reservation {
     @NotNull(message = "Number Place Should Not Be Null")
     private Integer reservedPlaces;
 
-    @Positive(message = "cost should be a positive value")
-    @NotNull(message = "cost Should Not Be Null")
-    private double cost;
-
     @ManyToOne
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
