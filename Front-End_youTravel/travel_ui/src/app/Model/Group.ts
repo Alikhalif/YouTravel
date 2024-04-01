@@ -1,9 +1,14 @@
 export interface Group{
+  num: number,
   countryStarting : String,
+
+  stateStarting: String,
 
   cityStarting : String,
 
   countryArrival : String,
+
+  stateArrival: String,
 
   cityArrival : String,
 

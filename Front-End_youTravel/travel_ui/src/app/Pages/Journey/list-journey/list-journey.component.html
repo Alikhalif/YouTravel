@@ -13,7 +13,7 @@
 
 
   <div *ngFor="let journey of ListJourney" class="relative m-5 bg-white border border-gray-200 rounded-lg shadow ">
-    <div class="group overflow-hidden ">
+    <div class="group overflow-hidden">
       <ul role="list" class="divide-y divide-gray-200">
         <li class="p-1">
           <div class="flex items-center">
@@ -24,7 +24,6 @@
               <p class="text-sm font-medium text-gray-900 truncate">{{ journey.userDTOResp.firstname }} {{ journey.userDTOResp.lastname }}</p>
               <p class="text-sm text-gray-500 truncate">{{ journey.userDTOResp.email }}</p>
             </div>
-            <div class="inline-flex items-center text-base font-semibold text-gray-900">${{ journey.costTotal }}</div>
           </div>
         </li>
         <li class="p-3">
@@ -53,7 +52,7 @@
         </li>
       </ul>
 
-      <div class="absolute h-full w-full mx-auto bg-black/20 flex items-center justify-center rounded-lg group-hover:bottom-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
+      <div class="absolute h-full w-full mx-auto overflow-hidden bg-black/20 flex items-center justify-center rounded-lg group-hover:bottom-0 opacity-0 group-hover:opacity-100 transition-all duration-300">
         <button (click)="togglePopup(journey.code, journey.nbrPlaces)"  class="text-white bg-gradient-to-br from-purple-600 to-blue-500 hover:bg-gradient-to-bl focus:ring-4 focus:outline-none focus:ring-blue-300  rounded-full px-6 py-3 font-semibold">
           Reserve
         </button>
@@ -78,10 +77,10 @@
                       <label for="name" class="block mb-2 text-sm font-medium text-gray-900 ">Place Reserved</label>
                       <input type="number" name="placeReserved" [(ngModel)]="myReservation.reservedPlaces" min="1" id="name" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="Place Reserved" required="">
                   </div>
-                  <div class="col-span-2 sm:col-span-1">
+                  <!-- <div class="col-span-2 sm:col-span-1">
                       <label for="price" class="block mb-2 text-sm font-medium text-gray-900 ">Cost</label>
                       <input type="number" name="cost" [(ngModel)]="myReservation.cost" id="price" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5" placeholder="$2999" required="">
-                  </div>
+                  </div> -->
                 </div>
               </div>
 

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import { User } from 'src/app/Model/User';
 import { UserService } from 'src/app/Services/User/user.service';
 
@@ -9,7 +10,9 @@ import { UserService } from 'src/app/Services/User/user.service';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
-  constructor(private userService: UserService, private router: Router){}
+  constructor(private userService: UserService,
+              private router: Router,
+              private toast: NgToastService){}
 
   error!: any[]
 
@@ -37,11 +40,14 @@ export class RegisterComponent {
         localStorage.setItem('user', JSON.stringify(authenticationResponse))
         this.router.navigateByUrl('/')
         console.log(authenticationResponse.token, 'response');
+        this.toast.success({detail:"SUCCESS",summary:'Register Success',duration:5000});
+
 
       },
       error: (err: any) => {
         this.error = err.error;
         console.log(err.error.errors, 'errors');
+        this.toast.success({detail:"WARN",summary:'All fields are mandatory',duration:5000});
       },
     });
 

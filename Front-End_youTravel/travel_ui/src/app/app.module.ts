@@ -22,6 +22,9 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CommonModule } from '@angular/common';
 import { CreateReservationComponent } from './Pages/Reserveation/create-reservation/create-reservation.component';
+import { NgToastModule } from 'ng-angular-popup';
+import { CreateGroupComponent } from './Pages/Group/create-group/create-group.component';
+import { ListGroupComponent } from './Pages/Group/list-group/list-group.component';
 // import { StoreModule } from '@ngrx/store';
 
 @NgModule({
@@ -35,6 +38,8 @@ import { CreateReservationComponent } from './Pages/Reserveation/create-reservat
     ListJourneyComponent,
     CreateJourneyComponent,
     CreateReservationComponent,
+    CreateGroupComponent,
+    ListGroupComponent,
   ],
   imports: [
     BrowserModule,
@@ -50,7 +55,7 @@ import { CreateReservationComponent } from './Pages/Reserveation/create-reservat
     ReactiveFormsModule,
     MatFormFieldModule,
     CommonModule,
-    // StoreModule.forRoot({}, {}),
+    NgToastModule,
 
   ],
   providers: [],

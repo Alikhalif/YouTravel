@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { NgToastService } from 'ng-angular-popup';
 import { Reservation } from 'src/app/Model/Reservation';
 import { JourneyResp } from 'src/app/Model/Response/JourneyResp';
 import { JourneyService } from 'src/app/Services/Journey/journey.service';
@@ -19,8 +21,6 @@ export class ListJourneyComponent implements OnInit{
   myReservation: Reservation ={
     reservedPlaces : 1,
 
-    cost : 0,
-
     user_id : 0,
 
     journey_id : 0,
@@ -28,10 +28,13 @@ export class ListJourneyComponent implements OnInit{
 
   constructor(private journeyService: JourneyService,
     private userService: UserService,
-    private reservationService: ReservationService ){}
+    private reservationService: ReservationService,
+    private router: Router,
+    private toast: NgToastService ){}
 
   ngOnInit(){
     this.loadJourney();
+
   }
 
   loadJourney(): void{
@@ -53,6 +56,8 @@ export class ListJourneyComponent implements OnInit{
 
   saveReservation(){
     const userJson = this.userService.getUserFromLocalStorage()
+    console.log(userJson);
+
     if (userJson && userJson.uid !== undefined) {
       if(this.id_journey > 0){
         this.myReservation.user_id = userJson.uid;
@@ -61,7 +66,7 @@ export class ListJourneyComponent implements OnInit{
 
         this.reservationService.save(this.myReservation).subscribe({
           next: (res: Reservation) => {
-
+            this.toast.success({detail:"SUCCESS",summary:'Your reservation has been saved successfully',duration:3000});
             console.log(res, ' car response');
 
 
@@ -76,8 +81,8 @@ export class ListJourneyComponent implements OnInit{
 
 
     } else {
-      alert("Please login first");
-      window.location.href='/login';
+      this.toast.success({detail:"WARN",summary:'Please login first',duration:5000});
+      this.router.navigateByUrl('/login')
     }
 
 
@@ -86,14 +91,21 @@ export class ListJourneyComponent implements OnInit{
   }
 
   togglePopup(id:number, nbrP: number) {
-    if(nbrP > 0){
-      this.showPopup = !this.showPopup;
-      console.log(id);
-      this.id_journey = id;
-    }else{
-      alert("All seats are full")
-    }
+    const userJson = this.userService.getUserFromLocalStorage()
+    console.log(userJson);
 
+    if (userJson && userJson.uid !== undefined) {
+      if(nbrP > 0){
+        this.showPopup = !this.showPopup;
+        console.log(id);
+        this.id_journey = id;
+      }else{
+        alert("All seats are full")
+      }
+    } else {
+      this.toast.success({detail:"WARN",summary:'Please login first',duration:5000});
+      this.router.navigateByUrl('/login')
+    }
 
 
   }

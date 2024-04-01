@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Journey } from 'src/app/Model/Journey';
+import { JourneySearch } from 'src/app/Model/JourneySearch';
 import { JourneyResp } from 'src/app/Model/Response/JourneyResp';
 
 @Injectable({
@@ -21,6 +22,12 @@ export class JourneyService {
   findAll(): Observable<JourneyResp> {
     return this.httpClient.get<JourneyResp>(`${this.apiUrl}`);
   }
+
+
+  search(inputData: JourneySearch): Observable<JourneyResp>{
+    return this.httpClient.post<JourneyResp>(`${this.apiUrl}/search`,inputData);
+  }
+
 
 
 }

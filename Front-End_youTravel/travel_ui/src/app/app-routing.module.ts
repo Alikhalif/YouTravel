@@ -6,6 +6,8 @@ import { RegisterComponent } from './Pages/Auth/register/register.component';
 import { ListJourneyComponent } from './Pages/Journey/list-journey/list-journey.component';
 import { CreateJourneyComponent } from './Pages/Journey/create-journey/create-journey.component';
 import { CreateReservationComponent } from './Pages/Reserveation/create-reservation/create-reservation.component';
+import { CreateGroupComponent } from './Pages/Group/create-group/create-group.component';
+import { ListGroupComponent } from './Pages/Group/list-group/list-group.component';
 
 const routes: Routes = [
   { path:'', component:HomeComponent, },
@@ -35,6 +37,16 @@ const routes: Routes = [
     component: CreateReservationComponent,
     // title: 'Register',
   },
+
+  {
+    path: 'group',
+    component: ListGroupComponent,
+  },
+  {
+    path: 'group/create',
+    component: CreateGroupComponent,
+  },
+
 
 ];
 

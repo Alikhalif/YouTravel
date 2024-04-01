@@ -1,5 +1,7 @@
-export interface Journey{
-  id: number,
+import { UserResp } from "./UserResp";
+
+export interface GroupResp{
+  num: number,
   countryStarting : String,
 
   stateStarting: String,
@@ -20,9 +22,5 @@ export interface Journey{
 
   endDate : Date,
 
-  nbrPlaces : number,
-
-  car_id : number,
-
-  user_id : number,
+  userDTOResp: UserResp;
 }

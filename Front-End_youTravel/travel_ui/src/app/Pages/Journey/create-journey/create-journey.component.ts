@@ -56,7 +56,7 @@ export class CreateJourneyComponent implements OnInit{
 
     endDate : new Date(),
 
-    costTotal : 0,
+    // costTotal : 0,
 
     nbrPlaces : 0,
 
