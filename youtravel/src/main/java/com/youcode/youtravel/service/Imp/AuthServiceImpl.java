@@ -10,6 +10,7 @@ import com.youcode.youtravel.enums.Role;
 import com.youcode.youtravel.repositories.TokenRepository;
 import com.youcode.youtravel.repositories.UserRepository;
 import com.youcode.youtravel.security.JwtService;
+import com.youcode.youtravel.service.AuthService;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -21,7 +22,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 
 @Service
-public class AuthServiceImpl {
+public class AuthServiceImpl implements AuthService {
 
 
     private final UserRepository userRepository;
@@ -50,6 +51,7 @@ public class AuthServiceImpl {
     }
 
 
+    @Override
     public AuthResponseDTO register(RegisterRequestDTO request) {
 
         // check if user already exist. if exist than authenticate the user
@@ -89,6 +91,7 @@ public class AuthServiceImpl {
 
     }
 
+    @Override
     public AuthResponseDTO login(AuthRequestDTO request){
 
 

@@ -3,6 +3,7 @@ package com.youcode.youtravel.controller;
 import com.youcode.youtravel.dto.AuthDTO.AuthRequestDTO;
 import com.youcode.youtravel.dto.AuthDTO.AuthResponseDTO;
 import com.youcode.youtravel.dto.AuthDTO.RegisterRequestDTO;
+import com.youcode.youtravel.service.AuthService;
 import com.youcode.youtravel.service.Imp.AuthServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping
 public class AuthController {
-    private final AuthServiceImpl authService;
+    private final AuthService authService;
 
     @Autowired
     public AuthController(AuthServiceImpl authService) {
