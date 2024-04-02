@@ -8,6 +8,8 @@ import { CreateJourneyComponent } from './Pages/Journey/create-journey/create-jo
 import { CreateReservationComponent } from './Pages/Reserveation/create-reservation/create-reservation.component';
 import { CreateGroupComponent } from './Pages/Group/create-group/create-group.component';
 import { ListGroupComponent } from './Pages/Group/list-group/list-group.component';
+import { MyJourneyComponent } from './Pages/Profile/my-journey/my-journey.component';
+import { NotFoundComponent } from './Pages/404/not-found/not-found.component';
 
 const routes: Routes = [
   { path:'', component:HomeComponent, },
@@ -47,6 +49,14 @@ const routes: Routes = [
     component: CreateGroupComponent,
   },
 
+  {
+    path: 'profile/myjourney',
+    component: MyJourneyComponent,
+  },
+
+
+  { path: '404', component: NotFoundComponent },
+  { path: '**', redirectTo: '/404' }
 
 ];
 

@@ -25,6 +25,9 @@ import { CreateReservationComponent } from './Pages/Reserveation/create-reservat
 import { NgToastModule } from 'ng-angular-popup';
 import { CreateGroupComponent } from './Pages/Group/create-group/create-group.component';
 import { ListGroupComponent } from './Pages/Group/list-group/list-group.component';
+import { MyJourneyComponent } from './Pages/Profile/my-journey/my-journey.component';
+import { ProfileSidebarComponent } from './Template/Sidebar/profile-sidebar/profile-sidebar.component';
+import { NotFoundComponent } from './Pages/404/not-found/not-found.component';
 // import { StoreModule } from '@ngrx/store';
 
 @NgModule({
@@ -40,6 +43,9 @@ import { ListGroupComponent } from './Pages/Group/list-group/list-group.componen
     CreateReservationComponent,
     CreateGroupComponent,
     ListGroupComponent,
+    MyJourneyComponent,
+    ProfileSidebarComponent,
+    NotFoundComponent,
   ],
   imports: [
     BrowserModule,
