@@ -2,12 +2,15 @@ package com.youcode.youtravel.controller;
 
 import com.youcode.youtravel.dto.GroupDTO;
 import com.youcode.youtravel.dto.ResponseDto.GroupDTOResp;
+import com.youcode.youtravel.entities.User;
 import com.youcode.youtravel.service.GroupService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -39,6 +42,21 @@ public class GroupController {
     public ResponseEntity<GroupDTOResp> findGroupByID(@PathVariable Long id) {
         GroupDTOResp group = groupService.getOne(id);
         return ResponseEntity.ok(group);
+    }
+
+    @GetMapping("/user_group")
+    public List<GroupDTOResp> getGroupsByAuthenticatedUser() {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        if (authentication != null && authentication.getPrincipal() instanceof User) {
+            User authenticatedUser = (User) authentication.getPrincipal();
+            System.out.println(authenticatedUser);
+
+            return groupService.getGroupsByAuthenticatedUser(authenticatedUser);
+        }else {
+            System.out.println("null");
+            return groupService.getGroupsByAuthenticatedUser(null);
+        }
+
     }
 
     @GetMapping

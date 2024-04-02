@@ -59,6 +59,15 @@ public class GroupServiceImpl implements GroupService {
         return modelMapper.map(group, GroupDTOResp.class);
     }
 
+    @Override
+    public List<GroupDTOResp> getGroupsByAuthenticatedUser(User authenticatedUser) {
+        return groupRepsitory.findByUser(authenticatedUser).stream().map(group -> {
+                 GroupDTOResp groupDTOResp = modelMapper.map(group, GroupDTOResp.class);
+                 return groupDTOResp;
+                })
+                .collect(Collectors.toList());
+    }
+
 
     @Override
     public List<GroupDTOResp> findAll() {

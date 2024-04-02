@@ -65,25 +65,40 @@ public class JourneyServiceImpl implements JourneyService {
     }
 
     @Override
-    public JourneyDTOResp getOne(Long id){
-        Optional<Journey> journey = journeyRepository.findById(id);
-        if (journey == null) {
-            throw new ResourceNotFoundException("Fish not found");
+    public JourneyDTOResp getOne(Long id) {
+        Optional<Journey> optionalJourney = journeyRepository.findById(id);
+        if (optionalJourney.isEmpty()) {
+            throw new ResourceNotFoundException("Journey not found");
         }
-        return modelMapper.map(journey, JourneyDTOResp.class);
+        Journey journey = optionalJourney.get();
+        JourneyDTOResp journeyDTOResp = modelMapper.map(journey, JourneyDTOResp.class);
+        journeyDTOResp.setCarDTOResp(getCarDTOResp(journey.getCar()));
+        journeyDTOResp.setUserDTOResp(getUserDTOResp(journey.getUser()));
+        return journeyDTOResp;
     }
-
 
     @Override
     public List<JourneyDTOResp> findAll() {
         return journeyRepository.findAll().stream()
-                .map(journey -> {
-                    JourneyDTOResp journeyDTO = modelMapper.map(journey, JourneyDTOResp.class);
-                    journeyDTO.setCarDTOResp(modelMapper.map(carRepository.findById(journey.getCar().getId()), CarDTOResp.class));
-                    journeyDTO.setUserDTOResp(modelMapper.map(userRepository.findById(journey.getUser().getUid()), UserDTOResp.class));
-                    return journeyDTO;
-                })
+                .map(this::mapToJourneyDTOResp)
                 .collect(Collectors.toList());
+    }
+
+    private JourneyDTOResp mapToJourneyDTOResp(Journey journey) {
+        JourneyDTOResp journeyDTOResp = modelMapper.map(journey, JourneyDTOResp.class);
+        journeyDTOResp.setCarDTOResp(getCarDTOResp(journey.getCar()));
+        journeyDTOResp.setUserDTOResp(getUserDTOResp(journey.getUser()));
+        return journeyDTOResp;
+    }
+
+    private CarDTOResp getCarDTOResp(Car car) {
+        Optional<Car> optionalCar = carRepository.findById(car.getId());
+        return optionalCar.map(c -> modelMapper.map(c, CarDTOResp.class)).orElse(null);
+    }
+
+    private UserDTOResp getUserDTOResp(User user) {
+        Optional<User> optionalUser = userRepository.findById(user.getUid());
+        return optionalUser.map(u -> modelMapper.map(u, UserDTOResp.class)).orElse(null);
     }
 
     @Override
