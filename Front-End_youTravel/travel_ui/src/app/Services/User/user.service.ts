@@ -51,4 +51,64 @@ export class UserService {
       return null;
     }
   }
+
+
+  isLoggedIn(): boolean {
+
+    return localStorage.getItem('user') !== null;
+  }
+
+  isAdmin(): boolean {
+    const userJson = this.getUserFromLocalStorage();
+    return userJson?.role === 'ADMIN';
+  }
+
+  isMemeber(): boolean{
+    const userJson = this.getUserFromLocalStorage();
+    if (userJson && userJson.role) {
+      return userJson.role === "ADMIN";
+    } else {
+      return false;
+    }
+  }
+
+  //logout
+
+  logout(){
+    localStorage.removeItem("user");
+  }
+
+  getRole():string|null{
+    const userJson = this.getUserFromLocalStorage();
+    if (userJson && userJson.role) {
+      return userJson.role;
+    } else {
+      return null;
+    }
+  }
+
+  getUsername():string|null{
+    return localStorage.getItem("username");
+  }
+
+  getId():string | null{
+    const userJson = this.getUserFromLocalStorage();
+    if (userJson && userJson.role) {
+      return userJson.role;
+    } else {
+      return null;
+    }
+  }
+
+  getToken():string|null{
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+      const userParse = JSON.parse(userJson);
+      return userParse.token;
+
+    } else {
+      console.log('User object not found in localStorage');
+      return null;
+    }
+  }
 }

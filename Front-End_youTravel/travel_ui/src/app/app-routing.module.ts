@@ -10,34 +10,39 @@ import { CreateGroupComponent } from './Pages/Group/create-group/create-group.co
 import { ListGroupComponent } from './Pages/Group/list-group/list-group.component';
 import { MyJourneyComponent } from './Pages/Profile/my-journey/my-journey.component';
 import { NotFoundComponent } from './Pages/404/not-found/not-found.component';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path:'', component:HomeComponent, },
   {
     path: 'auth/login',
     component: LoginComponent,
-    // title: 'Login',
 
   },
   {
     path: 'auth/register',
     component: RegisterComponent,
-    // title: 'Register',
   },
   {
     path: 'journey',
     component: ListJourneyComponent,
-    // title: 'Register',
+
   },
   {
     path: 'journey/create',
     component: CreateJourneyComponent,
-    // title: 'Register',
+    canActivate: [authGuard],
+    data: {
+      roles: ['BASE_USER', 'ADMIN'],
+    },
   },
   {
     path: 'journey/reserve',
     component: CreateReservationComponent,
-    // title: 'Register',
+    canActivate: [authGuard],
+    data: {
+      roles: ['BASE_USER', 'ADMIN'],
+    },
   },
 
   {
@@ -47,11 +52,19 @@ const routes: Routes = [
   {
     path: 'group/create',
     component: CreateGroupComponent,
+    canActivate: [authGuard],
+    data: {
+      roles: ['BASE_USER', 'ADMIN'],
+    },
   },
 
   {
     path: 'profile/myjourney',
     component: MyJourneyComponent,
+    canActivate: [authGuard],
+    data: {
+      roles: ['BASE_USER'],
+    },
   },
 
 

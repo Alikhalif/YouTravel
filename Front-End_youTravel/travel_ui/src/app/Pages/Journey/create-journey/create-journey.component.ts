@@ -13,6 +13,7 @@ import { UserService } from 'src/app/Services/User/user.service';
 import { GoogleMapsService } from 'src/app/Services/Google-maps/google-maps.service';
 import { CarService } from 'src/app/Services/Car/car.service';
 import { JourneyService } from 'src/app/Services/Journey/journey.service';
+import { NgToastService } from 'ng-angular-popup';
 
 
 @Component({
@@ -116,6 +117,7 @@ export class CreateJourneyComponent implements OnInit{
     private journeyService: JourneyService,
     private ngZone: NgZone,
     private googleMapsService: GoogleMapsService,
+    private toast: NgToastService,
 
     ) { }
 
@@ -356,7 +358,7 @@ console.log(x);
       this.my_journey.user_id = userJson.uid;
       this.journeyService.save(this.my_journey).subscribe({
         next: (res: any) => {
-
+          this.toast.success({detail:"SUCCESS",summary:'Login Success',duration:5000});
           console.log('response', res);
 
         },

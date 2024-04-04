@@ -24,7 +24,7 @@ export class LoginComponent {
 
   myAuth: Auth = {
 
-    username: '',
+    email: '',
 
     password: '',
   }
@@ -55,7 +55,7 @@ export class LoginComponent {
 
   clear(){
     this.myAuth = {
-      username: '',
+      email: '',
 
       password: '',
 
