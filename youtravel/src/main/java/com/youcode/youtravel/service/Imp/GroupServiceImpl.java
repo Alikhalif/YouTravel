@@ -22,7 +22,6 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
-
 @Service
 public class GroupServiceImpl implements GroupService {
 

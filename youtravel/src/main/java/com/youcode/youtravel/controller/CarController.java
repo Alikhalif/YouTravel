@@ -39,7 +39,6 @@ public class CarController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<CarDTOResp> findCarByID(@PathVariable Long id) {
         CarDTOResp car = carService.getOne(id);
         return ResponseEntity.ok(car);
@@ -54,14 +53,13 @@ public class CarController {
 
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
-    public ResponseEntity<CarDTOResp> updateFish(@PathVariable Long id, @Valid @RequestBody CarDTO carDTO) {
+    public ResponseEntity<CarDTOResp> updateCar(@PathVariable Long id, @Valid @RequestBody CarDTO carDTO) {
         CarDTOResp updatedCar = carService.update(id, carDTO);
         return ResponseEntity.ok(updatedCar);
     }
 
     @GetMapping("/paginated")
-    @PreAuthorize("hasAnyAuthority('ADMIN')")
-    public ResponseEntity<List<CarDTOResp>> getPaginatedLevel(
+    public ResponseEntity<List<CarDTOResp>> getPaginatedCar(
             @RequestParam(name = "page", defaultValue = "0") int page,
             @RequestParam(name = "size", defaultValue = "10") int size
     ) {

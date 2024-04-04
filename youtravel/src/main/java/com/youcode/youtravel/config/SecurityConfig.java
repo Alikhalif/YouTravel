@@ -1,5 +1,6 @@
 package com.youcode.youtravel.config;
 
+import com.youcode.youtravel.repositories.UserRepository;
 import com.youcode.youtravel.security.JwtAuthenticationFilter;
 import com.youcode.youtravel.service.Imp.UserDetailsServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,78 +8,66 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
+import static org.springframework.security.config.http.SessionCreationPolicy.STATELESS;
+
 @Configuration
 @EnableWebSecurity
-//@EnableGlobalMethodSecurity(prePostEnabled = true)
+@EnableMethodSecurity
+//@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
-    private final UserDetailsServiceImpl userDetailsServiceImp;
 
+    private final UserDetailsServiceImpl userDetailsService;
     private final JwtAuthenticationFilter jwtAuthenticationFilter;
+    private final AuthenticationProvider authenticationProvider;
+
+    private final UserRepository userRepository;
 
     private final CustomLogoutHandler logoutHandler;
 
     @Autowired
-    public SecurityConfig(UserDetailsServiceImpl userDetailsServiceImp,
+    public SecurityConfig(UserDetailsServiceImpl userDetailsService,
                           JwtAuthenticationFilter jwtAuthenticationFilter,
+                          AuthenticationProvider authenticationProvider,
+                          UserRepository userRepository,
                           CustomLogoutHandler logoutHandler) {
-        this.userDetailsServiceImp = userDetailsServiceImp;
+        this.userDetailsService = userDetailsService;
         this.jwtAuthenticationFilter = jwtAuthenticationFilter;
+        this.authenticationProvider = authenticationProvider;
+        this.userRepository = userRepository;
         this.logoutHandler = logoutHandler;
     }
 
-
-    /*
     private static final String[] WHITE_LIST_URL = {
             "/register",
             "/login/**",
+            "/api/**"
     };
 
-    @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    private static final String[] ADMIN_ROLE_LIST_URL = {
 
-            return http
-                    .csrf(AbstractHttpConfigurer::disable)
-                    .authorizeHttpRequests(
-                            req->req.requestMatchers(WHITE_LIST_URL)
-                                    .permitAll()
-                                    .anyRequest()
-                                    .authenticated()
-                    ).userDetailsService(userDetailsServiceImp)
-                    .sessionManagement(session->session
-                            .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                    .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                    .exceptionHandling(
-                            e->e.accessDeniedHandler(
-                                            (request, response, accessDeniedException)->response.setStatus(403)
-                                    )
-                                    .authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
-                    .logout(l->l
-                            .logoutUrl("/logout")
-                            .addLogoutHandler(logoutHandler)
-                            .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext()
-                            ))
-                    .build();
+    };
 
-        }*/
+    private static final String[] USER_ADMIN_ROLE_LIST_URL = {
+            "/api/journey",
 
-
-    private static final String[] WHITE_LIST_URL = {
-            "/register",
-            "/login",
-            "/api/**"
     };
 
     @Bean
@@ -88,23 +77,20 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
+                                //.requestMatchers(USER_ADMIN_ROLE_LIST_URL)
+                                //.hasRole("BASE_USER")
                                 .anyRequest()
                                 .authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class);
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout(logout ->
+                        logout.logoutUrl("/auth/logout")
+                                .addLogoutHandler(logoutHandler)
+                                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+                );
+
         return http.build();
-    }
-
-
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
-        return configuration.getAuthenticationManager();
     }
 }

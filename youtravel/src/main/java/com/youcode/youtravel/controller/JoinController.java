@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -22,6 +23,7 @@ public class JoinController {
     private JoinService joinService;
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<JoinDTOResp> createJoin(@Valid @RequestBody JoinDTO joinDTO) {
         JoinDTOResp joinDTOResp = joinService.create(joinDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(joinDTOResp);
@@ -29,6 +31,7 @@ public class JoinController {
 
 
     @DeleteMapping("/{uid}/{num}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<Map<String, String>> deleteJoin(@PathVariable Long uid, @PathVariable Long num) {
         joinService.delete(uid,num);
         Map<String, String> response = new HashMap<>();
@@ -44,12 +47,14 @@ public class JoinController {
 
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<List<JoinDTOResp>> getJoins() {
         List<JoinDTOResp> joins = joinService.findAll();
         return ResponseEntity.ok(joins);
     }
 
     @PutMapping("/{uid}/{num}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<JoinDTOResp> updateJoin(@PathVariable Long uid, @PathVariable Long num, @Valid @RequestBody JoinDTO joinDTO) {
         JoinDTOResp updatedJoin = joinService.update(uid, num, joinDTO);
         return ResponseEntity.ok(updatedJoin);

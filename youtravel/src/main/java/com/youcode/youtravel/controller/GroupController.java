@@ -9,6 +9,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.*;
@@ -25,12 +26,14 @@ public class GroupController {
     @Autowired
     private GroupService groupService;
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<GroupDTOResp> createGroup(@Valid @RequestBody GroupDTO groupDTO) {
         GroupDTOResp groupDTOResp = groupService.create(groupDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(groupDTOResp);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<Map<String, String>> deleteGroup(@PathVariable Long id) {
         groupService.delete(id);
         Map<String, String> response = new HashMap<>();
@@ -45,6 +48,7 @@ public class GroupController {
     }
 
     @GetMapping("/user_group")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public List<GroupDTOResp> getGroupsByAuthenticatedUser() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         if (authentication != null && authentication.getPrincipal() instanceof User) {
@@ -66,6 +70,7 @@ public class GroupController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<GroupDTOResp> updateGroup(@PathVariable Long id, @Valid @RequestBody GroupDTO groupDTO) {
         GroupDTOResp updatedGroup = groupService.update(id, groupDTO);
         return ResponseEntity.ok(updatedGroup);

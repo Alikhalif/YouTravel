@@ -24,13 +24,14 @@ public class JourneyController {
     private JourneyService journeyService;
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_BASE_USER')")
     public ResponseEntity<JourneyDTOResp> createJourney(@Valid @RequestBody JourneyDTO journeyDTO) {
         JourneyDTOResp journeyDTOResp = journeyService.create(journeyDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(journeyDTOResp);
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_BASE_USER')")
     public ResponseEntity<Map<String, String>> deleteJourney(@PathVariable Long id) {
         journeyService.delete(id);
         Map<String, String> response = new HashMap<>();
@@ -44,7 +45,7 @@ public class JourneyController {
         return ResponseEntity.ok(journey);
     }
 
-    @PostMapping("/search") // Removed trailing slash from the endpoint
+    @PostMapping("/search")
     public ResponseEntity<List<JourneyDTOResp>> searchJourney(@Valid @RequestBody JourneySearchDTO searchDTO) {
         List<JourneyDTOResp> journeys = journeyService.findJourneysByCriteria(searchDTO);
         return ResponseEntity.ok(journeys);
@@ -57,6 +58,7 @@ public class JourneyController {
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_BASE_USER')")
     public ResponseEntity<JourneyDTOResp> updateJourney(@PathVariable Long id, @Valid @RequestBody JourneyDTO journeyDTO) {
         JourneyDTOResp updatedJourny = journeyService.update(id, journeyDTO);
         return ResponseEntity.ok(updatedJourny);

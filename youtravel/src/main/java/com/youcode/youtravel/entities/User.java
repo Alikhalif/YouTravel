@@ -12,6 +12,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
@@ -47,7 +48,7 @@ public class User implements UserDetails {
     @Column(nullable = false)
     private String password;
 
-    @NotEmpty(message = "Role Type should not be empty")
+    //@NotEmpty(message = "Role Type should not be empty")
     @Enumerated(EnumType.STRING)
     private Role role;
 
@@ -68,7 +69,10 @@ public class User implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        System.out.println(this.getRole().name());
+        List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        authorities.add(new SimpleGrantedAuthority( this.getRole().name()));
+        return authorities;
     }
 
 

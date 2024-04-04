@@ -26,13 +26,13 @@ public class AuthController {
 
     @PostMapping("/register")
     public ResponseEntity<AuthResponseDTO> register(@Valid @RequestBody RegisterRequestDTO request) {
-        System.out.println("ok");
+        System.out.println("ok !");
         return ResponseEntity.ok(authService.register(request));
     }
 
     @PostMapping("/login")
     public ResponseEntity<AuthResponseDTO> login(@Valid @RequestBody AuthRequestDTO request) {
-        System.out.println("login ok !!!");
+        System.out.println("ok !!");
         return ResponseEntity.ok(authService.login(request));
     }
 

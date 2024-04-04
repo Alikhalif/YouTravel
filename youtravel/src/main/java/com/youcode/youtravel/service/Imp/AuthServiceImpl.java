@@ -7,6 +7,7 @@ import com.youcode.youtravel.dto.ResponseDto.UserDTOResp;
 import com.youcode.youtravel.entities.Token;
 import com.youcode.youtravel.entities.User;
 import com.youcode.youtravel.enums.Role;
+import com.youcode.youtravel.enums.TokenType;
 import com.youcode.youtravel.repositories.TokenRepository;
 import com.youcode.youtravel.repositories.UserRepository;
 import com.youcode.youtravel.security.JwtService;
@@ -19,7 +20,9 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class AuthServiceImpl implements AuthService {
@@ -74,11 +77,11 @@ public class AuthServiceImpl implements AuthService {
 
             String jwt = jwtService.generateToken(user);
 
-            Long user_id = user.getUid();
-            String username = user.getUsername();
-            String role = user.getRole().name();
 
-            saveUserToken(jwt, user);
+
+            var jwtToken = jwtService.generateToken(user);
+
+            saveUserToken(user, jwtToken);
 
             return AuthResponseDTO.builder()
                     .token(jwt)
@@ -97,17 +100,24 @@ public class AuthServiceImpl implements AuthService {
 
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        request.getUsername(),
+                        request.getEmail(),
                         request.getPassword()
                 )
         );
 
-        User user = userRepository.findByUsername(request.getUsername()).orElseThrow();
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
 
-        String jwt = jwtService.generateToken(user);
+        System.out.println(user);
 
-        revokeAllTokenByUser(user);
-        saveUserToken(jwt, user);
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("firstname", user.getUsername());
+        claims.put("lastname", user.getLastname());
+        claims.put("password", user.getPassword());
+        claims.put("role", user.getRole().name());
+
+        String jwt = jwtService.generateToken(claims,user);
+
+
 
         return AuthResponseDTO.builder()
                 .token(jwt)
@@ -115,28 +125,12 @@ public class AuthServiceImpl implements AuthService {
 
     }
 
-    private void revokeAllTokenByUser(User user) {
-        List<Token> validTokens = tokenRepository.findAllTokensByUser(user.getUid());
-        if(validTokens.isEmpty()) {
-            return;
-        }
 
-        validTokens.forEach(t-> {
-            t.setLoggedOut(true);
-        });
 
-        tokenRepository.saveAll(validTokens);
-    }
-    private void saveUserToken(String jwt, User user) {
-        Token token = new Token();
-        token.setToken(jwt);
-        token.setLoggedOut(false);
-        token.setUser(user);
+    private void saveUserToken(User user, String jwtToken) {
+        var token = Token.builder().user(user).token(jwtToken).tokenType(TokenType.BEARER).expired(false).revoked(false).build();
         tokenRepository.save(token);
     }
-
-
-
 
 
 }

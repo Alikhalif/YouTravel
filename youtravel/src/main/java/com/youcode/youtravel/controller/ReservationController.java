@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -25,12 +26,14 @@ public class ReservationController {
     private ReservationService reservationService;
 
     @PostMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<ReservationDTOResp> createReservation(@Valid @RequestBody ReservationDTO reservationDTO) {
         ReservationDTOResp reservationDTOResp = reservationService.create(reservationDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(reservationDTOResp);
     }
 
     @DeleteMapping("/{uid}/{code}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<Map<String, String>> deleteReservation(@PathVariable Long uid, @PathVariable Long code) {
         reservationService.delete(uid,code);
         Map<String, String> response = new HashMap<>();
@@ -39,18 +42,21 @@ public class ReservationController {
     }
 
     @GetMapping("/{uid}/{code}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<ReservationDTOResp> findReservationByID(@PathVariable Long uid, @PathVariable Long code) {
         ReservationDTOResp reservation = reservationService.getOne(uid, code);
         return ResponseEntity.ok(reservation);
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<List<ReservationDTOResp>> getReservations() {
         List<ReservationDTOResp> reservations = reservationService.findAll();
         return ResponseEntity.ok(reservations);
     }
 
     @PutMapping("/{uid}/{code}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<ReservationDTOResp> updateReservation(@PathVariable Long uid, @PathVariable Long code, @Valid @RequestBody ReservationDTO reservationDTO) {
         ReservationDTOResp updatedReservation = reservationService.update(uid, code, reservationDTO);
         return ResponseEntity.ok(updatedReservation);
