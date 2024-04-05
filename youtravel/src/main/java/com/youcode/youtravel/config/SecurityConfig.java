@@ -31,7 +31,6 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
-//@EnableMethodSecurity(prePostEnabled = true)
 public class SecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService;
@@ -61,14 +60,6 @@ public class SecurityConfig {
             "/api/**"
     };
 
-    private static final String[] ADMIN_ROLE_LIST_URL = {
-
-    };
-
-    private static final String[] USER_ADMIN_ROLE_LIST_URL = {
-            "/api/journey",
-
-    };
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
@@ -77,8 +68,6 @@ public class SecurityConfig {
                 .authorizeHttpRequests(req ->
                         req.requestMatchers(WHITE_LIST_URL)
                                 .permitAll()
-                                //.requestMatchers(USER_ADMIN_ROLE_LIST_URL)
-                                //.hasRole("BASE_USER")
                                 .anyRequest()
                                 .authenticated()
                 )

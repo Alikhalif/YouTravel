@@ -108,6 +108,7 @@
 				</configuration>
 			</plugin>
 		</plugins>
+		<finalName>docker-java</finalName>
 	</build>
 
 </project>
