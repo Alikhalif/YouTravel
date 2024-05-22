@@ -75,7 +75,6 @@ public class AuthServiceImpl implements AuthService {
 
             user = userRepository.save(user);
 
-            String jwt = jwtService.generateToken(user);
 
 
 
@@ -84,7 +83,7 @@ public class AuthServiceImpl implements AuthService {
             saveUserToken(user, jwtToken);
 
             return AuthResponseDTO.builder()
-                    .token(jwt)
+                    .token(jwtToken)
                     .userDTOResp(modelMapper.map(user, UserDTOResp.class))
                     .build();
 
@@ -110,7 +109,7 @@ public class AuthServiceImpl implements AuthService {
         System.out.println(user);
 
         Map<String, Object> claims = new HashMap<>();
-        claims.put("firstname", user.getUsername());
+        claims.put("username", user.getUsername());
         claims.put("lastname", user.getLastname());
         claims.put("password", user.getPassword());
         claims.put("role", user.getRole().name());

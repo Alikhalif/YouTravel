@@ -63,7 +63,7 @@ public class GroupController {
 
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<GroupDTOResp>> getGroups() {
         List<GroupDTOResp> groups = groupService.findAll();
         return ResponseEntity.ok(groups);

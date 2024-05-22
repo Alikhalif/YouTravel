@@ -24,14 +24,14 @@ public class JourneyController {
     private JourneyService journeyService;
 
     @PostMapping
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_BASE_USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<JourneyDTOResp> createJourney(@Valid @RequestBody JourneyDTO journeyDTO) {
         JourneyDTOResp journeyDTOResp = journeyService.create(journeyDTO);
         return ResponseEntity.status(HttpStatus.CREATED).body(journeyDTOResp);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_BASE_USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<Map<String, String>> deleteJourney(@PathVariable Long id) {
         journeyService.delete(id);
         Map<String, String> response = new HashMap<>();
@@ -51,14 +51,14 @@ public class JourneyController {
         return ResponseEntity.ok(journeys);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public ResponseEntity<List<JourneyDTOResp>> getJourneys() {
         List<JourneyDTOResp> journeys = journeyService.findAll();
         return ResponseEntity.ok(journeys);
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_BASE_USER')")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<JourneyDTOResp> updateJourney(@PathVariable Long id, @Valid @RequestBody JourneyDTO journeyDTO) {
         JourneyDTOResp updatedJourny = journeyService.update(id, journeyDTO);
         return ResponseEntity.ok(updatedJourny);

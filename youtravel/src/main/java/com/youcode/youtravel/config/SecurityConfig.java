@@ -30,7 +30,11 @@ import static org.springframework.security.config.http.SessionCreationPolicy.STA
 
 @Configuration
 @EnableWebSecurity
-@EnableMethodSecurity
+//@EnableMethodSecurity
+@EnableGlobalMethodSecurity(
+        prePostEnabled = true,
+        securedEnabled = true,
+        jsr250Enabled = true)
 public class SecurityConfig {
 
     private final UserDetailsServiceImpl userDetailsService;
@@ -56,8 +60,9 @@ public class SecurityConfig {
 
     private static final String[] WHITE_LIST_URL = {
             "/register",
-            "/login/**",
-            "/api/**"
+            "/login",
+            "/api/journey/all",
+            "/api/group/all",
     };
 
 
