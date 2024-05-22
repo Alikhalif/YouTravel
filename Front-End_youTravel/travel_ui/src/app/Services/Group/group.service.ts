@@ -20,7 +20,7 @@ export class GroupService {
 
 
   findAll(): Observable<GroupResp> {
-    return this.httpClient.get<GroupResp>(`${this.apiUrl}`);
+    return this.httpClient.get<GroupResp>(`${this.apiUrl}/all`);
   }
 
 

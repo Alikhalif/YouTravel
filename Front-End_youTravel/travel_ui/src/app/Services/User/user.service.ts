@@ -75,7 +75,7 @@ export class UserService {
   //logout
 
   logout(){
-    localStorage.removeItem("user");
+    return this.httpClient.post(`${this.apiUrl}/auth/logout`,{})
   }
 
   getRole():string|null{

@@ -1,5 +1,4 @@
 
-
 <nav *ngIf="isLoggedIn" x-data="{ isOpen: false }" class="relative bg-white shadow ">
   <div class="container px-6 py-4 mx-auto">
       <div class="lg:flex lg:items-center lg:justify-between">
@@ -29,18 +28,23 @@
                   <a routerLink="/journey/reserve" class="px-3 py-2 mx-3 mt-2 text-gray-700 transition-colors duration-300 transform rounded-md lg:mt-0  hover:bg-gray-100 ">Search</a>
               </div>
 
-              <div class="flex items-center mt-4 lg:mt-0">
-
-
-                  <button type="button" routerLink="/profile/myjourney" class="flex items-center focus:outline-none" aria-label="toggle profile dropdown">
-                      <div class="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
-                          <img src="/assets/upload/profile_.jpg" class="object-cover w-full h-full" alt="avatar">
-                      </div>
-
-                      <h3 class="mx-2 text-gray-700  lg:hidden">Abdelali Khalif</h3>
-                  </button>
+              <!-- ?????????????? -->
+              <div class="relative">
+                <button (click)="toggleDropdown()" class="flex items-center text-white focus:outline-none" id="userMenuButton" aria-expanded="false" aria-haspopup="true">
+                  <div class="w-8 h-8 overflow-hidden border-2 border-gray-400 rounded-full">
+                    <img src="/assets/upload/profile_.jpg" class="object-cover w-full h-full" alt="avatar">
+                </div>
+                </button>
+                <div id="userMenu" class="origin-top-right absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 hidden" role="menu" aria-orientation="vertical" aria-labelledby="userMenuButton">
+                  <a routerLink="/profile/myjourney" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" role="menuitem">Profilell</a>
+                  <button (click)="logout()" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100" role="menuitem">Logout</button>
+                </div>
               </div>
+
           </div>
+
+
+
       </div>
   </div>
 </nav>

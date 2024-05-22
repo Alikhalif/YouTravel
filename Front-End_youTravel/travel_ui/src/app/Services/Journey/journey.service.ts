@@ -20,7 +20,7 @@ export class JourneyService {
 
 
   findAll(): Observable<JourneyResp> {
-    return this.httpClient.get<JourneyResp>(`${this.apiUrl}`);
+    return this.httpClient.get<JourneyResp>(`${this.apiUrl}/all`);
   }
 
 

@@ -9,7 +9,7 @@ import { FooterComponent } from './Template/footer/footer.component';
 import { LoginComponent } from './Pages/Auth/login/login.component';
 import { RegisterComponent } from './Pages/Auth/register/register.component';
 import { FormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { ListJourneyComponent } from './Pages/Journey/list-journey/list-journey.component';
 import { CreateJourneyComponent } from './Pages/Journey/create-journey/create-journey.component';
 import { GoogleMapsModule } from '@angular/google-maps';
@@ -28,6 +28,7 @@ import { ListGroupComponent } from './Pages/Group/list-group/list-group.componen
 import { MyJourneyComponent } from './Pages/Profile/my-journey/my-journey.component';
 import { ProfileSidebarComponent } from './Template/Sidebar/profile-sidebar/profile-sidebar.component';
 import { NotFoundComponent } from './Pages/404/not-found/not-found.component';
+import { CustomInterceptor } from './interceptor/custom.interceptor';
 // import { StoreModule } from '@ngrx/store';
 
 @NgModule({
@@ -64,7 +65,9 @@ import { NotFoundComponent } from './Pages/404/not-found/not-found.component';
     NgToastModule,
 
   ],
-  providers: [],
-  bootstrap: [AppComponent]
+  providers: [{
+    provide:HTTP_INTERCEPTORS, useClass: CustomInterceptor, multi: true,
+  }],
+  bootstrap: [AppComponent],
 })
 export class AppModule { }

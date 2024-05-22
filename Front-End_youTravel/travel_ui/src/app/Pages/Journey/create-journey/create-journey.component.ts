@@ -34,6 +34,7 @@ export class CreateJourneyComponent implements OnInit{
   index: number = 0;
   x: number = 0;
   error!: string;
+  currentDateTime: any = new Date();
 
   my_journey: Journey = {
     id:0,
@@ -128,6 +129,7 @@ export class CreateJourneyComponent implements OnInit{
     this.loadGoogleMaps(() => {
       this.searchPlace();
     });
+
   }
 
 /////////////////////////////////
@@ -319,6 +321,9 @@ console.log(x);
       return null;
     }
   }
+
+
+
 
   save(){
     const userJson = this.userService.getUserFromLocalStorage()

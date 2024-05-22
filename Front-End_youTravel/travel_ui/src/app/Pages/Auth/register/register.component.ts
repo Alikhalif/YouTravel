@@ -36,11 +36,10 @@ export class RegisterComponent {
   submitForm(){
     this.userService.register(this.myUser).subscribe({
       next: (authenticationResponse) => {
-        alert("created successfuly");
         localStorage.setItem('user', JSON.stringify(authenticationResponse))
         this.router.navigateByUrl('/')
-        console.log(authenticationResponse.token, 'response');
         this.toast.success({detail:"SUCCESS",summary:'Register Success',duration:5000});
+        window.location.reload()
 
 
       },

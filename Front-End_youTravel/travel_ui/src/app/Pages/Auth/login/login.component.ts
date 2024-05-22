@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { Auth } from 'src/app/Model/Auth';
+import { UserRespo } from 'src/app/Model/UserRespo';
 import { UserService } from 'src/app/Services/User/user.service';
 
 @Component({
@@ -39,13 +40,23 @@ export class LoginComponent {
         this.toast.success({detail:"SUCCESS",summary:'Login Success',duration:5000});
         localStorage.setItem('user', JSON.stringify(res))
 
-        this.router.navigateByUrl('/')
+        const storedUser = localStorage.getItem('user');
+        if(storedUser!=null){
+          const userParse = JSON.parse(storedUser);
+          const token = userParse.token;
+          const authResponse: UserRespo = userParse.userDTOResp;
+          this.router.navigateByUrl('/')
+
+        }
+
+        window.location.reload();
+
 
       },
       error: (err: any) => {
         this.error = err.error;
         console.log(err.error.errors, 'errors');
-        this.toast.success({detail:"WARN",summary:' Login or password incorrect',duration:5000});
+        this.toast.warning({detail:"WARN",summary:' Login or password incorrect',duration:5000});
       },
     });
 
