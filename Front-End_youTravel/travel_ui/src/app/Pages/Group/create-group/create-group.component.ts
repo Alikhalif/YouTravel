@@ -1,4 +1,5 @@
 import { Component, Input } from '@angular/core';
+import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { Car } from 'src/app/Model/Car';
 import { Group } from 'src/app/Model/Group';
@@ -24,6 +25,8 @@ export class CreateGroupComponent {
   ListJourney: any;
   showPopup = false;
   id_journey: number = 0;
+  currentDateTime: any = new Date();
+
 
 
   my_group: Group = {
@@ -93,7 +96,8 @@ export class CreateGroupComponent {
     private carService: CarService,
     private groupService: GroupService,
     // private reservationService: ReservationService,
-    private toast: NgToastService){}
+    private toast: NgToastService,
+    private route: Router){}
 
 
 
@@ -177,11 +181,15 @@ export class CreateGroupComponent {
         next: (res: any) => {
 
           console.log('response', res);
+          this.toast.success({detail:"SUCCESS",summary:'group created success',duration:5000});
+          this.route.navigateByUrl('/group')
 
         },
         error: (err: any) => {
           // this.error = err.error;
           // console.log(err.error.errors, 'errors');
+          this.toast.warning({detail:"WARN",summary:err,duration:5000});
+
         },
       });
     }

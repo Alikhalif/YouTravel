@@ -11,6 +11,7 @@ import { ListGroupComponent } from './Pages/Group/list-group/list-group.componen
 import { MyJourneyComponent } from './Pages/Profile/my-journey/my-journey.component';
 import { NotFoundComponent } from './Pages/404/not-found/not-found.component';
 import { authGuard } from './guards/auth.guard';
+import { DashboardComponent } from './Pages/admin/dashboard/dashboard.component';
 
 const routes: Routes = [
   { path:'', component:HomeComponent, },
@@ -64,6 +65,15 @@ const routes: Routes = [
     canActivate: [authGuard],
     data: {
       roles: ['BASE_USER'],
+    },
+  },
+
+  {
+    path: 'admin',
+    component: DashboardComponent,
+    canActivate: [authGuard],
+    data: {
+      roles: ['ADMIN'],
     },
   },
 

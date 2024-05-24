@@ -30,6 +30,7 @@ import { ProfileSidebarComponent } from './Template/Sidebar/profile-sidebar/prof
 import { NotFoundComponent } from './Pages/404/not-found/not-found.component';
 import { CustomInterceptor } from './interceptor/custom.interceptor';
 import { MatTabsModule } from '@angular/material/tabs';
+import { DashboardComponent } from './Pages/admin/dashboard/dashboard.component';
 // import { StoreModule } from '@ngrx/store';
 
 
@@ -50,6 +51,7 @@ import { MatTabsModule } from '@angular/material/tabs';
     MyJourneyComponent,
     ProfileSidebarComponent,
     NotFoundComponent,
+    DashboardComponent,
   ],
   imports: [
     BrowserModule,
