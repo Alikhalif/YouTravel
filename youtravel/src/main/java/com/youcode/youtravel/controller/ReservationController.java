@@ -55,6 +55,13 @@ public class ReservationController {
         return ResponseEntity.ok(reservations);
     }
 
+    @GetMapping("/user/{uid}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
+    public ResponseEntity<List<ReservationDTOResp>> getReservationsByUserId(@PathVariable Long uid) {
+        List<ReservationDTOResp> reservations = reservationService.getReservationByUser(uid);
+        return ResponseEntity.ok(reservations);
+    }
+
     @PutMapping("/{uid}/{code}")
     @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<ReservationDTOResp> updateReservation(@PathVariable Long uid, @PathVariable Long code, @Valid @RequestBody ReservationDTO reservationDTO) {

@@ -1,6 +1,7 @@
 package com.youcode.youtravel.service.Imp;
 
 import com.youcode.youtravel.dto.ReservationDTO;
+import com.youcode.youtravel.dto.ResponseDto.JourneyDTOResp;
 import com.youcode.youtravel.dto.ResponseDto.ReservationDTOResp;
 import com.youcode.youtravel.entities.Journey;
 import com.youcode.youtravel.entities.Reservation;
@@ -18,6 +19,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -111,6 +113,22 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public List<ReservationDTOResp> findAll() {
         return reservationRepository.findAll().stream().map(reservation -> modelMapper.map(reservation, ReservationDTOResp.class)).collect(Collectors.toList());
+    }
+
+    @Override
+    public List<ReservationDTOResp> getReservationByUser(Long id) {
+        List<Reservation> optionalReservation = reservationRepository.findByUserUid(id);
+        if (optionalReservation.isEmpty()) {
+            throw new ResourceNotFoundException("Reservation not found");
+        }
+        return optionalReservation.stream()
+                .map(reservation -> {
+                    ReservationDTOResp reservationDTOResp = modelMapper.map(reservation, ReservationDTOResp.class);
+                    JourneyDTOResp journeyDTOResp = modelMapper.map(reservation.getJourney(), JourneyDTOResp.class);
+                    reservationDTOResp.setJourneyDTOResp(journeyDTOResp);
+                    return reservationDTOResp;
+                })
+                .collect(Collectors.toList());
     }
 
 

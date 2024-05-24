@@ -12,6 +12,7 @@ public interface ReservationService {
     void delete(Long uid, Long code);
     ReservationDTOResp getOne(Long uid, Long code);
     List<ReservationDTOResp> findAll();
+    List<ReservationDTOResp>  getReservationByUser(Long id);
     ReservationDTOResp update(Long uid, Long code, ReservationDTO reservationDTO);
     Page<ReservationDTOResp> findWithPagination(Pageable pageable);
 }

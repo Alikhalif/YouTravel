@@ -8,7 +8,8 @@ import javax.validation.constraints.NotNull;
 public class ReservationDTOResp {
     private Integer reservedPlaces;
 
-    private Long user_id;
+//    private Long user_id;
 
-    private Long journey_id;
+//    private Long journey_id;
+    private JourneyDTOResp journeyDTOResp;
 }

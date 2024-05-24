@@ -63,6 +63,7 @@ public class SecurityConfig {
             "/login",
             "/api/journey/all",
             "/api/group/all",
+            "/api/users/role_user"
     };
 
 

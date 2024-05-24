@@ -71,8 +71,8 @@ public class ReservationServiceImplTest {
 
         reservationDTOResp = new ReservationDTOResp();
         reservationDTOResp.setReservedPlaces(2);
-        reservationDTOResp.setUser_id(1L);
-        reservationDTOResp.setJourney_id(1L);
+//        reservationDTOResp.setUser_id(1L);
+//        reservationDTOResp.setJourney_id(1L);
     }
 
     @Test
