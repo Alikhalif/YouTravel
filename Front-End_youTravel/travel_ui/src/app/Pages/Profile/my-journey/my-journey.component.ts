@@ -37,7 +37,6 @@ export class MyJourneyComponent implements OnInit{
 
       },
       error : (error) => {
-        alert("Error while retrieving data!");
         console.log('Error' + error);
       }
 

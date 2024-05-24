@@ -36,7 +36,8 @@
                 </div>
                 </button>
                 <div id="userMenu" class="origin-top-right absolute right-0 mt-2 w-48 bg-white border border-gray-200 rounded-md shadow-lg py-1 hidden" role="menu" aria-orientation="vertical" aria-labelledby="userMenuButton">
-                  <a routerLink="/profile/myjourney" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" role="menuitem">Profilell</a>
+
+                  <a *ngIf="!isAdmin" routerLink="/profile/myjourney" class="block px-4 py-2 text-gray-700 hover:bg-gray-100" role="menuitem">Profile</a>
                   <button (click)="logout()" class="block w-full text-left px-4 py-2 text-gray-700 hover:bg-gray-100" role="menuitem">Logout</button>
                 </div>
               </div>
