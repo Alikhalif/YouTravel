@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgToastService } from 'ng-angular-popup';
 import { Join } from 'src/app/Model/Join';
@@ -12,7 +12,7 @@ import { UserService } from 'src/app/Services/User/user.service';
   templateUrl: './list-group.component.html',
   styleUrls: ['./list-group.component.css']
 })
-export class ListGroupComponent {
+export class ListGroupComponent implements OnInit{
   ListGroup: any;
   showPopup = false;
   id_group: number = 0;

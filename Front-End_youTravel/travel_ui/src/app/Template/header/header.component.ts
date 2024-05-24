@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { BehaviorSubject } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UserService } from 'src/app/Services/User/user.service';
 
 @Component({
@@ -8,12 +8,28 @@ import { UserService } from 'src/app/Services/User/user.service';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.css']
 })
-export class HeaderComponent implements OnInit{
-  // private isLoggedIn = false;
-  private authState = new BehaviorSubject<boolean>(this.userService.isLoggedIn());
+export class HeaderComponent implements OnInit, OnDestroy{
 
-  constructor(private userService: UserService, private router: Router) { }
+  isLoggedIn$!: Observable<boolean>;
+  private subscriptions: Subscription = new Subscription();
 
+  constructor(private userService: UserService, private router: Router) {
+    this.isLoggedIn$ = this.userService.getLoggedInStatus();
+  }
+
+
+  // isLoggedIn = false;
+  isAdmin = false;
+
+  ngOnInit(){
+    this.isAdmin = this.userService.isAdmin();
+    this.isLoggedIn$ = this.userService.getLoggedInStatus();
+    console.log(this.isLoggedIn$);
+
+
+    this.subscriptions.add(this.isLoggedIn$.subscribe());
+
+  }
 
   showMenu = false;
   toggleNavbar(){
@@ -27,18 +43,16 @@ export class HeaderComponent implements OnInit{
     }
   }
 
-  // isLoggedIn = false;
-  isAdmin = false;
 
-  ngOnInit(){
-    // this.isLoggedIn = this.userService.isLoggedIn();
-    this.isAdmin = this.userService.isAdmin();
-  }
 
   logout() {
     this.userService.logout();
     localStorage.removeItem('user')
-    window.location.reload()
+    this.userService.loggedIn.next(false)
+    this.router.navigate(['/auth/login']);
+  }
 
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe();
   }
 }

@@ -15,4 +15,8 @@ export class ReservationService {
   save(inputData: Reservation) : Observable<any>{
     return this.httpClient.post(`${this.apiUrl}`,inputData);
   }
+
+  getReservationByUser(user_id: number): Observable<any>{
+    return this.httpClient.get(`${this.apiUrl}/user/${user_id}`);
+  }
 }

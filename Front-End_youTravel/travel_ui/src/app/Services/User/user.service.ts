@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { BehaviorSubject, Observable, tap } from 'rxjs';
 import { User } from 'src/app/Model/User';
 import { Auth } from 'src/app/Model/Auth';
 import { AuthResponse } from 'src/app/Model/AuthResponse';
@@ -11,6 +11,8 @@ import { UserRespo } from 'src/app/Model/UserRespo';
   providedIn: 'root'
 })
 export class UserService {
+
+  public loggedIn = new BehaviorSubject<boolean>(this.isLoggedIn());
 
   constructor(private httpClient: HttpClient) { }
 
@@ -63,6 +65,11 @@ export class UserService {
     return userJson?.role === 'ADMIN';
   }
 
+  /////////////
+  getLoggedInStatus(): Observable<boolean> {
+    return this.loggedIn.asObservable();
+  }
+
   isMemeber(): boolean{
     const userJson = this.getUserFromLocalStorage();
     if (userJson && userJson.role) {
@@ -74,8 +81,13 @@ export class UserService {
 
   //logout
 
-  logout(){
-    return this.httpClient.post(`${this.apiUrl}/auth/logout`,{})
+  logout(): Observable<any> {
+    return this.httpClient.post(`${this.apiUrl}/auth/logout`, {}).pipe(
+      tap(() => {
+        localStorage.removeItem('user');
+        this.loggedIn.next(false);
+      })
+    );
   }
 
   getRole():string|null{
@@ -111,4 +123,20 @@ export class UserService {
       return null;
     }
   }
+
+  getUserId():number|null{
+    const userJson = localStorage.getItem('user');
+    if (userJson) {
+      const userParse = JSON.parse(userJson);
+      console.log(userParse.userDTOResp.uid);
+
+      return userParse.userDTOResp.uid;
+
+    } else {
+      console.log('User object not found in localStorage');
+      return null;
+    }
+  }
+
+
 }

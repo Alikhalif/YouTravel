@@ -1,8 +1,145 @@
-<div class="flex">
-  <app-profile-sidebar></app-profile-sidebar>
+<div class="w-full h-full">
 
-  
-  <div class="w-full bg-black"> f</div>
-    <h1 >hiii fvsdfvfvvvvvvvv Lorem ipsum dolor sit amet consectetur adipisicing elit. Nisi quis qui quasi temporibus doloremque adipisci sequi at vero molestias corporis accusamus reprehenderit, obcaecati deleniti maxime aliquid provident dolores libero blanditiis?</h1>
+
+  <div >
+    <h1 class="m-3 p-3">My Profile</h1>
+
+    <mat-tab-group>
+      <mat-tab label="Journeys Reserved">
+
+        <div *ngIf="ListReservation != null"  class="">
+          <div *ngFor="let group of ListReservation" class="relative m-5 bg-white border border-gray-200 rounded-lg shadow ">
+            <div class="group overflow-hidden">
+              <ul role="list" class="divide-y divide-gray-200">
+
+                <li class="p-3">
+                  <div class="flex items-center">
+                    <div class="flex-1 min-w-0 ms-4">
+                      <p class="text-sm p-2 font-medium text-gray-400 truncate">{{ group.journeyDTOResp.startDate | date: 'dd MMM yyyy hh:mm' }}</p>
+                      <p class="text-sm p-2 font-medium text-gray-900 truncate">{{ group.journeyDTOResp.cityStarting }}</p>
+                      <p class="text-3xl p-2 font-bold text-gray-900 truncate">{{ group.journeyDTOResp.countryStarting }}</p>
+                    </div>
+
+
+
+                    <div class="flex">
+                      <img src="/assets/upload/black-plane.png" width="50px" alt="">
+                    </div>
+
+
+
+                    <div class="flex-1 text-right min-w-0 ms-4">
+                      <p class="text-sm p-2 font-medium text-gray-400 truncate">{{ group.journeyDTOResp.endDate | date: 'dd MMM yyyy' }}</p>
+                      <p class="text-sm p-2 font-medium text-gray-900 truncate">{{ group.journeyDTOResp.cityArrival }}</p>
+                      <p class="text-3xl p-2 font-bold text-gray-900 truncate">{{ group.journeyDTOResp.countryArrival }}</p>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+
+
+        </div>
+        <div>
+          <div *ngIf="ListReservation == null" >
+            <div class="flex items-center justify-center my-20">
+              <div class="max-w-md mx-auto p-8 bg-white shadow-lg rounded-lg">
+                  <div class="text-center">
+                      <svg class="mx-auto mb-4 w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                      </svg>
+                      <h3 class="text-xl font-bold text-gray-800 mb-2">No Reservation Found</h3>
+                      <p class="text-gray-600">Sorry, there is no data available at the moment.</p>
+                  </div>
+                  <div class="mt-6">
+                      <a routerLink="/" class="inline-block px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                          Go Back
+                      </a>
+                  </div>
+              </div>
+          </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Groups Joined">
+        <div *ngIf="ListReservationGroup != null">
+          <!-- code  -->
+        </div>
+        <div>
+          <div *ngIf="ListReservationGroup == null" >
+            <div class="flex items-center justify-center my-20">
+              <div class="max-w-md mx-auto p-8 bg-white shadow-lg rounded-lg">
+                  <div class="text-center">
+                      <svg class="mx-auto mb-4 w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                      </svg>
+                      <h3 class="text-xl font-bold text-gray-800 mb-2">No Reservation Found</h3>
+                      <p class="text-gray-600">Sorry, there is no data available at the moment.</p>
+                  </div>
+                  <div class="mt-6">
+                      <a routerLink="/" class="inline-block px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                          Go Back
+                      </a>
+                  </div>
+              </div>
+          </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Journeys Created">
+        <div *ngIf="ListJourneyCreated != null">
+          <!-- code  -->
+        </div>
+        <div>
+          <div *ngIf="ListJourneyCreated == null" >
+            <div class="flex items-center justify-center my-20">
+              <div class="max-w-md mx-auto p-8 bg-white shadow-lg rounded-lg">
+                  <div class="text-center">
+                      <svg class="mx-auto mb-4 w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                      </svg>
+                      <h3 class="text-xl font-bold text-gray-800 mb-2">No Reservation Found</h3>
+                      <p class="text-gray-600">Sorry, there is no data available at the moment.</p>
+                  </div>
+                  <div class="mt-6">
+                      <a routerLink="/" class="inline-block px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                          Go Back
+                      </a>
+                  </div>
+              </div>
+          </div>
+          </div>
+        </div>
+      </mat-tab>
+      <mat-tab label="Groups Created">
+        <div *ngIf="ListGroupCreated != null">
+          <!-- code  -->
+        </div>
+        <div>
+          <div *ngIf="ListGroupCreated == null" >
+            <div class="flex items-center justify-center my-20">
+              <div class="max-w-md mx-auto p-8 bg-white shadow-lg rounded-lg">
+                  <div class="text-center">
+                      <svg class="mx-auto mb-4 w-16 h-16 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 17v-2m3 2v-4m3 4v-6m2 10H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                      </svg>
+                      <h3 class="text-xl font-bold text-gray-800 mb-2">No Reservation Found</h3>
+                      <p class="text-gray-600">Sorry, there is no data available at the moment.</p>
+                  </div>
+                  <div class="mt-6">
+                      <a routerLink="/" class="inline-block px-4 py-2 text-sm font-medium text-white bg-indigo-600 rounded-md hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                          Go Back
+                      </a>
+                  </div>
+              </div>
+          </div>
+          </div>
+        </div>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+
 
 </div>

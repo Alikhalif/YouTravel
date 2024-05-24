@@ -29,7 +29,10 @@ import { MyJourneyComponent } from './Pages/Profile/my-journey/my-journey.compon
 import { ProfileSidebarComponent } from './Template/Sidebar/profile-sidebar/profile-sidebar.component';
 import { NotFoundComponent } from './Pages/404/not-found/not-found.component';
 import { CustomInterceptor } from './interceptor/custom.interceptor';
+import { MatTabsModule } from '@angular/material/tabs';
 // import { StoreModule } from '@ngrx/store';
+
+
 
 @NgModule({
   declarations: [
@@ -63,6 +66,8 @@ import { CustomInterceptor } from './interceptor/custom.interceptor';
     MatFormFieldModule,
     CommonModule,
     NgToastModule,
+    MatTabsModule,
+
 
   ],
   providers: [{

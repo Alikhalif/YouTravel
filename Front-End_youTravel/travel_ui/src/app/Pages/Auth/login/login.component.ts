@@ -49,7 +49,7 @@ export class LoginComponent {
 
         }
 
-        window.location.reload();
+        this.userService.loggedIn.next(true)
 
 
       },
