@@ -79,7 +79,8 @@ public class JourneyServiceImpl implements JourneyService {
 
     @Override
     public List<JourneyDTOResp> findAll() {
-        return journeyRepository.findAll().stream()
+        LocalDateTime currentDate = LocalDateTime.now();
+        return journeyRepository.findAllJourneysByCurrentDate(currentDate).stream()
                 .map(this::mapToJourneyDTOResp)
                 .collect(Collectors.toList());
     }
