@@ -57,6 +57,13 @@ public class JourneyController {
         return ResponseEntity.ok(journeys);
     }
 
+    @GetMapping("/user/{userId}")
+    @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
+    public ResponseEntity<List<JourneyDTOResp>> getJourneysByUser(@PathVariable Long userId) {
+        List<JourneyDTOResp> journeys = journeyService.getJourneysByUser(userId);
+        return ResponseEntity.ok(journeys);
+    }
+
     @PutMapping("/{id}")
     @PreAuthorize("hasAnyAuthority('ADMIN','BASE_USER')")
     public ResponseEntity<JourneyDTOResp> updateJourney(@PathVariable Long id, @Valid @RequestBody JourneyDTO journeyDTO) {

@@ -12,6 +12,7 @@ public interface JourneyService {
     JourneyDTOResp create(JourneyDTO journeyDTO);
     void delete(Long id);
     JourneyDTOResp getOne(Long id);
+    List<JourneyDTOResp> getJourneysByUser(Long userId);
     List<JourneyDTOResp> findJourneysByCriteria(JourneySearchDTO searchDTO);
     List<JourneyDTOResp> findAll();
     JourneyDTOResp update(Long id, JourneyDTO journeyDTO);

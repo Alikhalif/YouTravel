@@ -85,6 +85,13 @@ public class JourneyServiceImpl implements JourneyService {
                 .collect(Collectors.toList());
     }
 
+    @Override
+    public List<JourneyDTOResp> getJourneysByUser(Long userId) {
+        return journeyRepository.findJourneysByUserId(userId).stream()
+                .map(this::mapToJourneyDTOResp)
+                .collect(Collectors.toList());
+    }
+
     private JourneyDTOResp mapToJourneyDTOResp(Journey journey) {
         JourneyDTOResp journeyDTOResp = modelMapper.map(journey, JourneyDTOResp.class);
         journeyDTOResp.setCarDTOResp(getCarDTOResp(journey.getCar()));

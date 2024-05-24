@@ -26,4 +26,7 @@ public interface JourneyRepository extends JpaRepository<Journey, Long> {
 
     @Query("SELECT j FROM Journey j WHERE j.startDate >= :currentDate")
     List<Journey> findAllJourneysByCurrentDate(LocalDateTime currentDate);
+
+    @Query("SELECT j FROM Journey j WHERE j.user.uid = :userId")
+    List<Journey> findJourneysByUserId(@Param("userId") Long userId);
 }
