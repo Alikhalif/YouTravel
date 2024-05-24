@@ -54,8 +54,8 @@ export class LoginComponent {
 
       },
       error: (err: any) => {
-        this.error = err.error;
-        console.log(err.error.errors, 'errors');
+        this.error = err;
+        console.log(err, 'errors');
         this.toast.warning({detail:"WARN",summary:' Login or password incorrect',duration:5000});
       },
     });
