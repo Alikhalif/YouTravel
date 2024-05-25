@@ -8,6 +8,7 @@ import com.youcode.youtravel.entities.Token;
 import com.youcode.youtravel.entities.User;
 import com.youcode.youtravel.enums.Role;
 import com.youcode.youtravel.enums.TokenType;
+import com.youcode.youtravel.exception.ResourceNotFoundException;
 import com.youcode.youtravel.repositories.TokenRepository;
 import com.youcode.youtravel.repositories.UserRepository;
 import com.youcode.youtravel.security.JwtService;
@@ -58,7 +59,7 @@ public class AuthServiceImpl implements AuthService {
     public AuthResponseDTO register(RegisterRequestDTO request) {
 
         // check if user already exist. if exist than authenticate the user
-        if(userRepository.findByEmail(request.getUsername()).isPresent()) {
+        if(userRepository.findByUsername(request.getUsername()).isPresent()) {
             return new AuthResponseDTO("User already exist");
         }
         try {
@@ -104,7 +105,8 @@ public class AuthServiceImpl implements AuthService {
                 )
         );
 
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow();
+        User user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow(() -> new ResourceNotFoundException("User not found"));;
 
         System.out.println(user);
 
@@ -116,7 +118,8 @@ public class AuthServiceImpl implements AuthService {
 
         String jwt = jwtService.generateToken(claims,user);
 
-
+        revokeAllUserTokens(user);
+        saveUserToken(user, jwt);
 
         return AuthResponseDTO.builder()
                 .token(jwt)
@@ -129,6 +132,19 @@ public class AuthServiceImpl implements AuthService {
     private void saveUserToken(User user, String jwtToken) {
         var token = Token.builder().user(user).token(jwtToken).tokenType(TokenType.BEARER).expired(false).revoked(false).build();
         tokenRepository.save(token);
+    }
+
+    private void revokeAllUserTokens(User user) {
+        System.out.println(user.getUid());
+        var validUserTokens = tokenRepository.findAllTokensByUser(user.getUid());
+        System.out.println(validUserTokens.size());
+        if (!validUserTokens.isEmpty()) {
+            validUserTokens.forEach(token -> {
+                token.setExpired(true);
+                token.setRevoked(true);
+            });
+            tokenRepository.saveAll(validUserTokens);
+        }
     }
 
 
