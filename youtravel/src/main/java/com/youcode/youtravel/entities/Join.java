@@ -26,7 +26,7 @@ public class Join {
     @CreatedDate
     private LocalDateTime time;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull(message = "user id should not be null")

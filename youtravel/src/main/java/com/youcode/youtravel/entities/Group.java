@@ -49,7 +49,7 @@ public class Group {
     @NotBlank(message = "End Date Should not be Empty")
     private LocalDateTime endDate;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull(message = "user id should not be null")

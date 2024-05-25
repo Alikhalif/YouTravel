@@ -67,7 +67,7 @@ public class Journey {
     @NotNull(message = "car id should not be null")
     private Car car;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     @OnDelete(action = OnDeleteAction.CASCADE)
     @NotNull(message = "user id should not be null")

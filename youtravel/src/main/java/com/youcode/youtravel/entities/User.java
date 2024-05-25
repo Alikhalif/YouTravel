@@ -2,16 +2,13 @@ package com.youcode.youtravel.entities;
 
 import com.youcode.youtravel.enums.Role;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -28,56 +25,56 @@ public class User implements UserDetails {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long uid;
 
-    @NotBlank(message = "First Name Should not be Empty")
+    @NotBlank(message = "First Name should not be empty")
     private String firstname;
 
-    @NotBlank(message = "Last Name Should not be Empty")
+    @NotBlank(message = "Last Name should not be empty")
     private String lastname;
 
-    @NotBlank(message = "Phone Should not be Empty")
+    @NotBlank(message = "Phone should not be empty")
     private String phone;
 
-    @NotBlank(message = "Email Should not be Empty")
+    @NotBlank(message = "Email should not be empty")
     @Column(nullable = false, unique = true)
     private String email;
 
-    @NotBlank(message = "User Name Should not be Empty")
+    @NotBlank(message = "User Name should not be empty")
     @Column(nullable = false, unique = true)
     private String username;
 
+    @NotBlank(message = "Password should not be empty")
     @Column(nullable = false)
     private String password;
 
-    //@NotEmpty(message = "Role Type should not be empty")
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "Role type should not be null")
     private Role role;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Journey> journeyList;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Car> carList;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Group> groupList;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Reservation> reservationList;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY, orphanRemoval = true, cascade = CascadeType.ALL)
+    @ToString.Exclude
     private List<Join> joinList;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        System.out.println(this.getRole().name());
         List<SimpleGrantedAuthority> authorities = new ArrayList<>();
-        authorities.add(new SimpleGrantedAuthority( this.getRole().name()));
+        authorities.add(new SimpleGrantedAuthority(this.getRole().name()));
         return authorities;
-    }
-
-    @Override
-    public String getUsername(){
-        return username;
     }
 
     @Override
