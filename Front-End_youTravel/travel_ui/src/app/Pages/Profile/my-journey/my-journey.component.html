@@ -23,13 +23,13 @@
 
 
                     <div class="flex">
-                      <img src="/assets/upload/black-plane.png" width="50px" alt="">
+                      <img src="/assets/upload/car-512.png" width="70px" alt="">
                     </div>
 
 
 
                     <div class="flex-1 text-right min-w-0 ms-4">
-                      <p class="text-sm p-2 font-medium text-gray-400 truncate">{{ group.journeyDTOResp.endDate | date: 'dd MMM yyyy' }}</p>
+                      <p class="text-sm p-2 font-medium text-gray-400 truncate">{{ group.journeyDTOResp.endDate | date: 'dd MMM yyyy hh:mm' }}</p>
                       <p class="text-sm p-2 font-medium text-gray-900 truncate">{{ group.journeyDTOResp.cityArrival }}</p>
                       <p class="text-3xl p-2 font-bold text-gray-900 truncate">{{ group.journeyDTOResp.countryArrival }}</p>
                     </div>
